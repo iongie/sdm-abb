@@ -1,0 +1,73 @@
+<!--Login Page Starts-->
+<section id="login">
+  <div class="container-fluid">
+    <div class="row full-height-vh mt-0">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body login-img">
+              <div class="row mt-0">
+                <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                  <img src="../../../assets/img/gallery/login.png" alt="" class="img-fluid mt-5" width="400"
+                    height="230" />
+                </div>
+                <div class="col-lg-6 col-md-12 bg-white px-4 pt-5">
+                  <form (ngSubmit)="login()" #f="ngForm">
+                    <h4 class="card-title mb-2">Login</h4>
+                    <p class="card-text mb-3">
+                      Welcome back, please login to your account.
+                    </p>
+                    <div class="form-group">
+                      <input type="text" placeholder="Username" class="form-control" [(ngModel)]="data.username"
+                        name="username" #username="ngModel" autocomplete="off" required placeholder="email" email />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!username.valid && (username.dirty || username.touched) && username.errors?.email">Please
+                        enter a valid email!</small>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" placeholder="Password" class="form-control" [(ngModel)]="data.password"
+                        name="password" #password="ngModel" required placeholder="password" required />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!password.valid && (password.dirty || password.touched)">Password
+                        characters length must be between 4 and 24 !</small>
+                    </div>
+                    <!-- <input type="text" class="form-control mb-3" placeholder="Username" />
+                    <input type="password" class="form-control mb-3" placeholder="Password" /> -->
+                    <div class="d-flex justify-content-between mt-2">
+                      <div class="remember-me">
+                        <div class="custom-control custom-checkbox custom-control-inline mb-3">
+                          <input type="checkbox" id="customCheckboxInline1" name="customCheckboxInline1"
+                            class="custom-control-input" />
+                          <label class="custom-control-label" for="customCheckboxInline1">
+                            Remember Me
+                          </label>
+                        </div>
+                      </div>
+                      <div class="forgot-password-option">
+                        <a [routerLink]="['/forgot-password']" class="text-decoration-none text-primary">Forgot Password
+                          ?</a>
+                      </div>
+                    </div>
+                    <div class="fg-actions d-flex justify-content-between">
+                      <div class="login-btn">
+                        <button class="btn btn-outline-primary">
+                          <a [routerLink]="['/register']" class="text-decoration-none">Register</a>
+                        </button>
+                      </div>
+                      <div class="recover-pass">
+                        <button type="submit" class="btn btn-primary" [disabled]="!f.valid">
+                          <a class="text-decoration-none text-white">Login</a>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Login Page Ends-->

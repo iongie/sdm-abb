@@ -1,0 +1,67 @@
+<div class="row text-left">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-10 text-left">
+              <h4 class="card-title">Lowongan Kerja</h4>
+            </div>
+            <div class="col-2 text-right">
+              <div ngbDropdown>
+                <button class="btn btn-outline-primary mr-1" id="dropdownBasic1" ngbDropdownToggle>Action</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item" [routerLink]="['/lowongan-kerja/add']">New</button>
+                  <button class="dropdown-item" [routerLink]="['/lowongan-kerja/edit/1']">Edit</button>
+                  <button class="dropdown-item">Approve</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 mb-2">
+                  <label for="floatEmail">Request Pegawai</label>
+                  <ng-select [items]="cities" bindLabel="name" placeholder="Select city">
+                  </ng-select>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">Start End</label>
+                  <div class="border p-2 rounded">2020-10-10</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">End Date</label>
+                  <div class="border p-2 rounded">2020-10-10</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">Tahun</label>
+                  <div class="border p-2 rounded">2020</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">Periode</label>
+                  <div class="border p-2 rounded">TW2</div>
+              </div>
+              <div class="col-12 mb-2">
+                  <label for="floatEmail">Lokasi</label>
+                  <div class="border p-2 rounded">JKT - PUSAT</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">Divisi</label>
+                  <div class="border p-2 rounded">IT</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                  <label for="floatEmail">Jabatan</label>
+                  <div class="border p-2 rounded">Kadiv</div>
+              </div>
+              <div class="col-12 mb-2">
+                  <label for="floatEmail">Personil</label>
+                  <div class="border p-2 rounded">10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

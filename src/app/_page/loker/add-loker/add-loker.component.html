@@ -1,0 +1,110 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Divisi: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Jabatan: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Job title: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Personil: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Lowongan Kerja</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <form class="form" #f="ngForm">
+            <div class="row">
+              <!-- <div class="col-12 mb-2">
+                <label for="floatEmail">Request Karyawan</label>
+                <ng-select [items]="RekapPeriode" [(ngModel)]="dataLoker.idReqKaryawan" name="idReqKaryawan"
+                  id="idReqKaryawan" #idReqKaryawan="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idReqKaryawan.valid && (idReqKaryawan.dirty || idReqKaryawan.touched) ">Silahkan Pilih Request
+                  Karyawan</small>
+              </div> -->
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label for="minDate">Start Date</label>
+                  <input bsDatepicker class="form-control" [(ngModel)]="dataLoker.startDate" name="startDate"
+                    id="startDate" #startDate="ngModel" required [minDate]="minDate" autocomplete="off" />
+                  <small class="form-text text-muted danger"
+                    *ngIf="!startDate.valid && (startDate.dirty || startDate.touched) && startDate.errors?.minDate">minDate
+                    error</small>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label for="minDate">End Date</label>
+                  <input bsDatepicker class="form-control" [(ngModel)]="dataLoker.endDate" name="endDate" id="endDate"
+                    #endDate="ngModel" required autocomplete="off" />
+                  <small class="form-text text-muted danger"
+                    *ngIf="!endDate.valid && (endDate.dirty || endDate.touched) && endDate.errors?.minDate">minDate
+                    error</small>
+                </div>
+              </div>
+              <!-- <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Jumlah</label>
+                  <input class="form-control input-md " autocomplete="off" #personil="ngModel" required id="personil"
+                    name="personil" [(ngModel)]="dataLoker.personil" type="number" min="1">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!personil.valid && (personil.dirty || personil.touched)">Wajib diisi!!</small>
+                </fieldset>
+              </div> -->
+
+              <div class="form-group col-md-12 text-right">
+                <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
+                <button type="button" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Request Pegawai</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <aw-wizard #wizard navBarLayout="large-empty-symbols">
+            <aw-wizard-step [stepTitle]="'Pilihan RPK'"
+              [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }">
+              <form #workForm="ngForm" class="editForm" novalidate>
+                <br />
+                <div class='row justify-content-center'>
+                  <div class='col-6'>
+                    <div class="form-group">
+                      <div class="custom-control custom-radio m-1">
+                        <input type="radio" #no required [(ngModel)]="rpk.condition" id="no" name="condition"
+                          class="custom-control-input" value="no">
+                        <label class="custom-control-label" for="no">Tidak Sesuai RKAP</label>
+                      </div>
+                      <div class="custom-control custom-radio m-1">
+                        <input type="radio" #yes required [(ngModel)]="rpk.condition" id="yes" name="condition"
+                          class="custom-control-input" value="yes">
+                        <label class="custom-control-label" for="yes">Berdasarkan RKAP</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group text-center space-20">
+                  <button uiSref="address" type="button" (click)="rpkAction()" class="btn btn-raised btn-info"
+                    [disabled]="!workForm.valid" awNextStep>
+                    Next
+                    <span style="margin-left:10px;">
+                      <i class="ft-chevron-right"></i>
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </aw-wizard-step>
+            <aw-wizard-step [stepTitle]="'Request Kebutuhan'"
+              [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+              <form class="form" #f="ngForm">
+                <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="form-group">
+                      <label for="minDate">Start Date</label>
+                      <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.startDate" name="startDate"
+                        id="startDate" #startDate="ngModel" required [minDate]="minDate" autocomplete="off" />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!startDate.valid && (startDate.dirty || startDate.touched) && startDate.errors?.minDate">minDate
+                        error</small>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="form-group">
+                      <label for="minDate">End Date</label>
+                      <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.endDate" name="endDate"
+                        id="endDate" #endDate="ngModel" required autocomplete="off" />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!endDate.valid && (endDate.dirty || endDate.touched) && endDate.errors?.minDate">minDate
+                        error</small>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <label for="floatEmail">RKAP</label>
+                    <ng-select [items]="RekapPeriode" bindLabel="tampil" [(ngModel)]="selectedRkp.idRkp"
+                      name="idRkp" id="idRkp" #idRkp="ngModel" (ngModelChange)="selectRkap($event)">
+                    </ng-select>
+                    <small class="form-text text-muted danger"
+                      *ngIf="!idRkp.valid && (idRkp.dirty || idRkp.touched) ">Silahkan Pilih RKAP</small>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Tahun</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.rkap_periode}}</div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Periode</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.periode_pelaksanaan}}</div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <label for="floatEmail">Lokasi</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.branch_code}} - {{datarkap.branch_name}}
+                    </div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+                    <label for="floatEmail">Divisi</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.nm_divisi}}</div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+                    <label for="floatEmail">Jabatan</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.nm_jabatan}}</div>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+                    <label for="floatEmail">Bagian</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.nm_bagian}}</div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Personil</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{datarkap.jml_personil}}</div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <fieldset class="form-group">
+                      <label for="periode">Jumlah Request</label>
+                      <input class="form-control input-md " autocomplete="off" #personil="ngModel" required
+                        id="personil" name="personil" [(ngModel)]="dataReqKaryawan.personil" type="number" min="1">
+                      <small class="form-text text-muted danger"
+                        *ngIf="!personil.valid && (personil.dirty || personil.touched)">Wajib diisi!!</small>
+                      <small class="form-text text-muted danger"
+                        *ngIf="dataReqKaryawan.personil > datarkap.jml_personil">Lebih Dari Personel RKAP</small>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="form-group text-center">
+                  <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                    <span style="margin-right:10px;">
+                      <i class="ft-chevron-left"></i>
+                    </span> Previous</button>
+                  <button type="button" uiSref="work" class="btn btn-info btn-raised" [disabled]="!f.valid" awNextStep>
+                    Next
+                    <span style="margin-left:10px;">
+                      <i class="ft-chevron-right"></i>
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'Kualifikasi'"
+              [navigationSymbol]="{ symbol: '&#xf0b1;', fontFamily: 'FontAwesome' }">
+              <form #workForm="ngForm" class="editForm" (ngSubmit)="addReqKaryawan()" novalidate>
+                <br />
+                <div class='row'>
+                  <div class='col-12'>
+                    <div class="row">
+                      <div class="col-xl-12 col-lg-12 col-md-12">
+                        <fieldset class="form-group">
+                          <label for="placeTextarea">Keahlian yang dibutuhkan</label>
+                          <textarea class="form-control" id="keahlian" name="keahlian" #keahlian="ngModel" required
+                            [(ngModel)]="formKualifikasi.keahlian" rows="3" placeholder="Keahlian"
+                            autocomplete="off"></textarea>
+                          <small class="form-text text-muted danger"
+                            *ngIf="!keahlian.valid && (keahlian.dirty || keahlian.touched)">Wajib diisi!</small>
+                        </fieldset>
+                      </div>
+                      <div class="form-group col-xl-6 col-lg-6 col-md-12">
+                        <label for="projectinput6">Jenis Kelamin</label>
+                        <select id="projectinput6" [(ngModel)]="formKualifikasi.gender" name="gender"
+                          class="form-control">
+                          <option value="pria" selected>Pria</option>
+                          <option value="wanita">Wanita</option>
+                        </select>
+                      </div>
+                      <div class='col-xl-6 col-lg-6 col-md-12'>
+                        <div class="form-group">
+                          <label class="form-control-label" for="firstname">Pendidikan Minimum</label>
+                          <input class="form-control input-md" ngModel #pendidikanMinimum="ngModel" required
+                            id="pendidikanMinimum" [(ngModel)]="formKualifikasi.pendidikanMinimum"
+                            name="pendidikanMinimum" type="text" autocomplete="off">
+                          <small class="form-text text-muted danger"
+                            *ngIf="!pendidikanMinimum.valid && (pendidikanMinimum.dirty || pendidikanMinimum.touched)">Wajib
+                            diisi!</small>
+                        </div>
+                      </div>
+                      <div class='col-xl-6 col-lg-6 col-md-12'>
+                        <div class="form-group">
+                          <label class="form-control-label" for="firstname">Usia Minimum</label>
+                          <input class="form-control input-md" ngModel #usiaMinimum="ngModel" required id="usiaMinimum"
+                            name="usiaMinimum" [(ngModel)]="formKualifikasi.usiaMinimum" min='17' type="number">
+                          <small class="form-text text-muted danger"
+                            *ngIf="!usiaMinimum.valid && (usiaMinimum.dirty || usiaMinimum.touched)">Wajib
+                            diisi!</small>
+                        </div>
+                      </div>
+                      <div class='col-xl-6 col-lg-6 col-md-12'>
+                        <div class="form-group">
+                          <label class="form-control-label" for="firstname">Usia Maximum</label>
+                          <input class="form-control input-md" ngModel #usiaMaximum="ngModel" required id="usiaMaximum"
+                            name="usiaMaximum" [(ngModel)]="formKualifikasi.usiaMaximum" type="text">
+                          <small class="form-text text-muted danger"
+                            *ngIf="!usiaMaximum.valid && (usiaMaximum.dirty || usiaMaximum.touched)">Wajib
+                            diisi!</small>
+                        </div>
+                      </div>
+                      <div class="col-xl-12 col-lg-12 col-md-12">
+                        <fieldset class="form-group">
+                          <label for="placeTextarea">Pengalaman Kerja</label>
+                          <textarea class="form-control" id="pengalamanKerja" name="pengalamanKerja"
+                            #pengalamanKerja="ngModel" required rows="3" [(ngModel)]="formKualifikasi.pengalamanKerja"
+                            placeholder="Pengalaman Kerja" autocomplete="off"></textarea>
+                          <small class="form-text text-muted danger"
+                            *ngIf="!pengalamanKerja.valid && (pengalamanKerja.dirty || pengalamanKerja.touched)">Wajib
+                            diisi!</small>
+                        </fieldset>
+                      </div>
+
+                      <div class="col-xl-12 col-lg-12 col-md-12">
+                        <fieldset class="form-group">
+                          <label for="placeTextarea">ALasan Kebutuhan</label>
+                          <textarea class="form-control" id="reason" name="reason" #reason="ngModel" required
+                            [(ngModel)]="formKualifikasi.reason" rows="3" placeholder="Keahlian"
+                            autocomplete="off"></textarea>
+                          <small class="form-text text-muted danger"
+                            *ngIf="!reason.valid && (reason.dirty || reason.touched)">Wajib diisi!</small>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="form-group text-center space-20">
+                      <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                        <span style="margin-right:10px;">
+                          <i class="ft-chevron-left"></i>
+                        </span> Previous</button>
+                      <button uiSref="result" type="submit" class="btn btn-raised btn-success"
+                        [disabled]="!workForm.valid" awResetWizard>
+                        Finish
+                        <span style="margin-left:10px;">
+                          <i class="ft-chevron-right"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </aw-wizard-step>
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+#login {
+    background-image: url("../../../assets/img/gallery/light-bg.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  #login .login-img {
+    padding: 0;
+    background: #f0f0f0;
+  }
+  #login .login-btn .btn.btn-outline-primary:hover a {
+    color: #fff;
+  }
+  #login .recover-pass button.btn.btn-primary {
+    color: #fff !important;
+  }
+  #login .forgot-password-option a.text-decoration-none,
+  #login .forgot-password-option .custom-control-label,
+  #login .remember-me a.text-decoration-none,
+  #login .remember-me .custom-control-label {
+    font-size: 14px;
+  }

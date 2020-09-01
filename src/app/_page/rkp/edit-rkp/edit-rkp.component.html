@@ -1,0 +1,82 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Rencana Kebutuhan Karyawan</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <form class="form" (ngSubmit)="editRkp()" #f="ngForm">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Tahun</label>
+                <ng-select [items]="RekapPeriode" [(ngModel)]="dataRkp.tahun" name="tahun" id="tahun" #tahun="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!tahun.valid && (tahun.dirty || tahun.touched) ">Silahkan Pilih Tahun RKAP</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Periode</label>
+                <ng-select [items]="Periode" bindLabel="name" [(ngModel)]="dataRkp.periode" name="periode" id="periode"
+                  #periode="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!periode.valid && (periode.dirty || periode.touched) ">Silahkan Pilih Periode RKAP</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Lokasi</label>
+                <ng-select [items]="Lokasi" bindLabel="lokasiName" [(ngModel)]="selectedLokasi.idLokasi" name="idLokasi"
+                  id="idLokasi" #idLokasi="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idLokasi.valid && (idLokasi.dirty || idLokasi.touched) ">Silahkan Pilih Lokasi</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Divisi</label>
+                <ng-select [items]="Divisi" bindLabel="nm_divisi" [(ngModel)]="selectedDivisi.idDivisi" name="idDivisi"
+                  id="idDivisi" #idDivisi="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idDivisi.valid && (idDivisi.dirty || idDivisi.touched) ">Silahkan Pilih DIvisi</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Jabatan</label>
+                <ng-select [items]="Jabatan" bindLabel="nm_jabatan" [(ngModel)]="selectedJabatan.idJabatan"
+                  name="idJabatan" id="idJabatan" #idJabatan="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idJabatan.valid && (idJabatan.dirty || idJabatan.touched) ">Silahkan Pilih Jabatan</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Job Title</label>
+                <ng-select [items]="Bagian" bindLabel="jobtitle" [(ngModel)]="selectedBagian.idBagian" name="idBagian"
+                  id="idBagian" #idBagian="ngModel">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idBagian.valid && (idBagian.dirty || idBagian.touched) ">Silahkan Pilih Job Title</small>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Personel</label>
+                  <input class="form-control input-md " autocomplete="off" #personil="ngModel" required id="personil"
+                    name="personil" [(ngModel)]="dataRkp.personil" type="number" min="1">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!personil.valid && (personil.dirty || personil.touched)">Wajib diisi!!</small>
+                </fieldset>
+              </div>
+
+              <div class="form-group col-md-12 text-right">
+                <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
+                <button type="button" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

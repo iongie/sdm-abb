@@ -1,0 +1,236 @@
+<div class="row text-left">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Lowongan Kerja</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+            <label for="floatEmail">Tahun</label>
+            <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+            <label for="floatEmail">Periode</label>
+            <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+            <label for="floatEmail">Divisi</label>
+            <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+            <label for="floatEmail">Jabatan</label>
+            <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-12 mb-2">
+            <label for="floatEmail">Bagian</label>
+            <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Kandidat</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="card-body">
+          <form class="form" #kandidat="ngForm">
+            <div class="row">
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Nama</label>
+                  <input class="form-control input-md " autocomplete="off" #nama="ngModel" required id="nama"
+                    name="nama" [(ngModel)]="dataKandidat.nama" type="text">
+                  <small class="form-text text-muted danger" *ngIf="!nama.valid && (nama.dirty || nama.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Nomor Identitas</label>
+                  <input class="form-control input-md " autocomplete="off" #nomorIdentitas="ngModel" required
+                    id="nomorIdentitas" name="nomorIdentitas" [(ngModel)]="dataKandidat.nomorIdentitas" type="number"
+                    min="1">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!nomorIdentitas.valid && (nomorIdentitas.dirty || nomorIdentitas.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Email</label>
+                  <input class="form-control input-md " autocomplete="off" #email="ngModel" required id="email"
+                    name="email" [(ngModel)]="dataKandidat.email" type="email">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!email.valid && (email.dirty || email.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Gender</label>
+                  <select id="projectinput6" [(ngModel)]="dataKandidat.gender" #gender="ngModel" required name="gender"
+                    class="form-control">
+                    <option value="pria" selected>Pria</option>
+                    <option value="wanita">Wanita</option>
+                  </select>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!gender.valid && (gender.dirty || gender.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Tempat Lahir</label>
+                  <input class="form-control input-md " autocomplete="off" #tempatLahir="ngModel" required
+                    id="tempatLahir" name="tempatLahir" [(ngModel)]="dataKandidat.tempatLahir" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!tempatLahir.valid && (tempatLahir.dirty || tempatLahir.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Tanggal Lahir</label>
+                  <input class="form-control input-md " autocomplete="off" #tanggalLahir="ngModel" required
+                    id="tanggalLahir" name="tanggalLahir" [(ngModel)]="dataKandidat.tanggalLahir" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!tanggalLahir.valid && (tanggalLahir.dirty || tanggalLahir.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Alamat</label>
+                  <textarea class="form-control" id="alamat" name="alamat" #alamat="ngModel" required
+                    [(ngModel)]="dataKandidat.alamat" rows="3" placeholder="Keahlian" autocomplete="off"></textarea>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!alamat.valid && (alamat.dirty || alamat.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Provinsi</label>
+                  <input class="form-control input-md " autocomplete="off" #provinsi="ngModel" required id="provinsi"
+                    name="provinsi" [(ngModel)]="dataKandidat.provinsi" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!provinsi.valid && (provinsi.dirty || provinsi.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Kota</label>
+                  <input class="form-control input-md " autocomplete="off" #kota="ngModel" required id="kota"
+                    name="kota" [(ngModel)]="dataKandidat.kota" type="text">
+                  <small class="form-text text-muted danger" *ngIf="!kota.valid && (kota.dirty || kota.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Kecamatan</label>
+                  <input class="form-control input-md " autocomplete="off" #kota="ngModel" required id="kota"
+                    name="kota" [(ngModel)]="dataKandidat.kota" type="text">
+                  <small class="form-text text-muted danger" *ngIf="!kota.valid && (kota.dirty || kota.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Kelurahan</label>
+                  <input class="form-control input-md " autocomplete="off" #kelurahan="ngModel" required id="kelurahan"
+                    name="kelurahan" [(ngModel)]="dataKandidat.kelurahan" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!kelurahan.valid && (kelurahan.dirty || kelurahan.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Nomor Telepon</label>
+                  <input class="form-control input-md " autocomplete="off" #nomorTelepon="ngModel" required
+                    id="nomorTelepon" name="nomorTelepon" [(ngModel)]="dataKandidat.nomorTelepon" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!nomorTelepon.valid && (nomorTelepon.dirty || nomorTelepon.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Nomor Mobile</label>
+                  <input class="form-control input-md " autocomplete="off" #nomorMobile="ngModel" required
+                    id="nomorMobile" name="nomorMobile" [(ngModel)]="dataKandidat.nomorMobile" type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!nomorMobile.valid && (nomorMobile.dirty || nomorMobile.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Pendidikan Terakhir</label>
+                  <input class="form-control input-md " autocomplete="off" #pendidikanTerakhir="ngModel" required
+                    id="pendidikanTerakhir" name="pendidikanTerakhir" [(ngModel)]="dataKandidat.pendidikanTerakhir"
+                    type="text">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!pendidikanTerakhir.valid && (pendidikanTerakhir.dirty || pendidikanTerakhir.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Keahlian</label>
+                  <textarea class="form-control" id="keahlian" name="keahlian" #keahlian="ngModel" required
+                    [(ngModel)]="dataKandidat.keahlian" rows="3" autocomplete="off"></textarea>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!keahlian.valid && (keahlian.dirty || keahlian.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Pengalaman Kerja</label>
+                  <textarea class="form-control" id="pengalamanKerja" name="pengalamanKerja" #pengalamanKerja="ngModel"
+                    required [(ngModel)]="dataKandidat.pengalamanKerja" rows="3" placeholder="Pengalaman Kerja"
+                    autocomplete="off"></textarea>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!pengalamanKerja.valid && (pengalamanKerja.dirty || pengalamanKerja.touched)">Wajib
+                    diisi!!</small>
+                </fieldset>
+              </div>
+            </div>
+            <div class="form-group text-center space-20">
+              <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                <span style="margin-right:10px;">
+                  <i class="ft-chevron-left"></i>
+                </span> Previous</button>
+              <button uiSref="result" type="submit" class="btn btn-raised btn-success" [disabled]="!kandidat.valid"
+                awResetWizard>
+                Finish
+                <span style="margin-left:10px;">
+                  <i class="ft-chevron-right"></i>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

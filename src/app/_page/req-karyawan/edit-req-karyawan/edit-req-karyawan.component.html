@@ -1,0 +1,94 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Request Pegawai</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <form class="form" (ngSubmit)="editReqKaryawan()" #f="ngForm">
+            <div class="row">
+              <!-- <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label for="minDate">Start Date</label>
+                  <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.startDate" name="startDate"
+                    id="startDate" #startDate="ngModel" required [minDate]="minDate" autocomplete="off" />
+                  <small class="form-text text-muted danger"
+                    *ngIf="!startDate.valid && (startDate.dirty || startDate.touched) && startDate.errors?.minDate">minDate
+                    error</small>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label for="minDate">End Date</label>
+                  <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.endDate" name="endDate"
+                    id="endDate" #endDate="ngModel" required autocomplete="off" />
+                  <small class="form-text text-muted danger"
+                    *ngIf="!endDate.valid && (endDate.dirty || endDate.touched) && endDate.errors?.minDate">minDate
+                    error</small>
+                </div>
+              </div> -->
+              <div class="col-12 mb-2">
+                <label for="floatEmail">RKAP</label>
+                <ng-select [items]="RekapPeriode" bindLabel="periode_pelaksanaan" [(ngModel)]="selectedRkp.idRkp"
+                  name="idRkp" id="idRkp" #idRkp="ngModel" (ngModelChange)="selectRkap($event)">
+                </ng-select>
+                <small class="form-text text-muted danger"
+                  *ngIf="!idRkp.valid && (idRkp.dirty || idRkp.touched) ">Silahkan Pilih RKAP</small>
+              </div>
+              <!-- <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Tahun</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.rkap_periode}}</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Periode</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.periode_pelaksanaan}}</div>
+              </div> -->
+              <div class="col-12 mb-2">
+                <label for="floatEmail">Lokasi</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.branch_code}} - {{dataReqKaryawan.branch_name}}
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Divisi</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.nm_divisi}}</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Jabatan</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.nm_jabatan}}</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Bagian</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.nm_bagian}}</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <label for="floatEmail">Personil</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{dataReqKaryawan.jml_personil_plan}}</div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Jumlah Request</label>
+                  <input class="form-control input-md " autocomplete="off" #jml_req="ngModel" required
+                    id="jml_req" name="jml_req" [(ngModel)]="dataReqKaryawan.jml_req" type="number" min="1">
+                  <small class="form-text text-muted danger"
+                    *ngIf="!jml_req.valid && (jml_req.dirty || jml_req.touched)">Wajib diisi!!</small>
+                  <small class="form-text text-muted danger"
+                    *ngIf="dataReqKaryawan.jml_req > dataReqKaryawan.jml_req">Lebih Dari Personel RKAP</small>
+                </fieldset>
+              </div>
+
+              <div class="form-group col-md-12 text-right">
+                <button type="button" class="btn btn-success mr-2 btn-raised" (click)="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
