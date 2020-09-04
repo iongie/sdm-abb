@@ -1,11 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { ApiWithTokenService } from '../../../_service/api-with-token/api-with-token.service';
 import { CookieService } from 'ngx-cookie-service';
+import swal from 'sweetalert2';
+
+// Success Type Alert
+export function typeSuccess() {
+  swal.fire("Good job!", "Rencana Kebutuhan Pegawai telah berhasil disimpan!", "success");
+}
+
 
 @Component({
   selector: 'app-add-kandidat',
@@ -16,6 +23,8 @@ export class AddKandidatComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   acc: any;
   lokasi;
+  Provinsi: [];
+  Kota: [];
   dataKandidat = {
     idLoker: '',
     nama: '',
@@ -24,62 +33,38 @@ export class AddKandidatComponent implements OnInit, OnDestroy {
     tanggalLahir : '',
     gender: '',
     alamat: '',
-    provinsi: '',
-    kota: '',
-    kecamatan: '',
-    kelurahan: '',
+    provinsi: {
+      id: '',
+      name: '',
+    },
+    kota: {
+      id: '',
+      name: '',
+      province_id: ''
+    },
     nomorTelepon: '',
     nomorMobile: '',
     email: '',
     pendidikanTerakhir: '',
     keahlian: '',
-    pengalamanKerja: ''
+    pengalamanKerja: '',
+    statusNikah: ''
   }
   userData;
-  Divisi = [];
-  Jabatan = [];
-  Bagian = [];
-  Periode = [];
-  RekapPeriode = [];
-  selectedCity: any;
-  selectedRkp= {
-    idRkp: ''
-  };
-  date: Date;
-  minDate: Date;
+  checkerEmail: boolean;
+  messageStatusEmail;
   constructor(
     public ApiWithTokenService: ApiWithTokenService,
     public router : Router,
     public CookieService : CookieService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private activeRoute: ActivatedRoute,
   ) { 
-    this.minDate = new Date();
-    this.date = new Date();
-    this.date.setDate( this.date.getDate() + 365 );
-    let x: any = [
-      this.datePipe.transform(Date.now(),'yyyy'),
-      this.datePipe.transform(this.date, 'yyyy'),
-    ]
-    this.RekapPeriode = x;
-    this.Periode = [
-      {
-        name:'TW1'
-      },
-      {
-        name:'TW2'
-      },
-      {
-        name:'TW3'
-      },
-      {
-        name:'TW4'
-      }
-    ]
   }
 
   ngOnInit(): void {
     this.user();
-    this.getLokasi();
+    this.getProvinsi();
   }
 
   ngOnDestroy() {
@@ -105,66 +90,81 @@ export class AddKandidatComponent implements OnInit, OnDestroy {
     console.log(this.userData);
   }
 
-  getLokasi() {
-    const apiUrl = 'Cabang/getBranchById/'+this.userData.branch_code
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+  getProvinsi(){
+    this.ApiWithTokenService.getAll('Kandidat/showAllProvinsi', this.userData.token)
     .pipe(
       takeUntil(this.subs))
-    .subscribe(x => {
-      const lokasi = x.data.map(x=> {
-        const data = {
-          lokasiName: x.branch_code+' - '+x.branch_name,
-          branch_code: x.branch_code
-        }
-        return data;
-      })
-      this.lokasi = lokasi[0].lokasiName;
+    .subscribe(res => {
+      this.Provinsi = res.data;
     })
   }
 
-  getJabatan() {
-    const apiUrl = 'setupJabatan/getSetupJabatanByDivisi/'+this.userData.divisi
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
-    .pipe(
-      takeUntil(this.subs))
-    .subscribe(x => {
-      this.Jabatan = x.data;
-      console.log(this.Jabatan);
-    })
-  }
-
-  selectJabatan(ev){
+  selectProvinsi(ev) {
     console.log(ev);
+    this.getKota(ev.id);
   }
 
-  getBagian() {
-    const apiUrl = 'bagian/getBagianBySetupJabatan/'+this.userData.divisi
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+  getKota(ev){
+    const data = {
+      id : ev
+    }
+    this.ApiWithTokenService.getById(data, 'kandidat/getKotaByProvinsi/', this.userData.token)
     .pipe(
       takeUntil(this.subs))
-    .subscribe(x => {
-      this.Bagian = x.data;
-      console.log(this.Bagian);
+    .subscribe(res => {
+      this.Kota = res.data;
     })
   }
 
-  
-  // Prevent panel toggle code
-  public beforeChange($event: NgbPanelChangeEvent) {
-    if ($event.panelId === '1') {
-      $event.preventDefault();
+  checkEmail(ev){
+    const data = {
+      id : ev
     }
-    if ($event.panelId === '2' && $event.nextState === false) {
-      $event.preventDefault();
-    }
-  };
+    this.ApiWithTokenService.getById(data, 'Kandidat/checkEmailExistsKandidat/', this.userData.token)
+    .pipe(
+      takeUntil(this.subs))
+    .subscribe(res => {
+      console.log(res);
+      this.messageStatusEmail = res.message;
+      this.checkerEmail = (res.message =="Email is exists")? true:false;
+    })
+  }
 
   cancel(){
     this.router.navigate(['lowongan-kerja/data-table']);
   }
   
-  addRkp(){
-
+  addKandidat(){
+    this.activeRoute.params.subscribe(params => {
+      const data= {
+        id   : "",
+        id_lowongan: params.id,
+        nm_pelamar : this.dataKandidat.nama,
+        tmp_lahir: this.dataKandidat.tempatLahir,
+        tgl_lahir: this.dataKandidat.tanggalLahir,
+        gender: this.dataKandidat.gender,
+        marital_status: this.dataKandidat.statusNikah,
+        alamat: this.dataKandidat.alamat,
+        id_provinsi: this.dataKandidat.provinsi.id,
+        id_kotamadya: this.dataKandidat.kota.id,
+        telpon: this.dataKandidat.nomorTelepon,
+        hp: this.dataKandidat.nomorMobile,
+        email_pelamar: this.dataKandidat.email,
+        last_education: this.dataKandidat.pendidikanTerakhir,
+        keahlian: this.dataKandidat.keahlian,
+        working_experince: this.dataKandidat.pengalamanKerja,
+        created_by: this.userData.email
+      }
+      console.log(data);
+      this.ApiWithTokenService.add(data, 'kandidat/saveKandidat/', this.userData.token)
+      .pipe(
+        takeUntil(this.subs))
+      .subscribe(res => {
+        typeSuccess();
+        this.router.navigate(['/lowongan-kerja/data-table']);
+      })
+    });
+    
   }
 
 }

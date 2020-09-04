@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,8 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   acc: any;
   lokasi;
+  Provinsi: [];
+  Kota: [];
   dataKandidat = {
     idLoker: '',
     nama: '',
@@ -24,62 +26,37 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
     tanggalLahir : '',
     gender: '',
     alamat: '',
-    provinsi: '',
-    kota: '',
-    kecamatan: '',
-    kelurahan: '',
+    provinsi: {
+      id: '',
+      name: '',
+    },
+    kota: {
+      id: '',
+      name: '',
+      province_id: ''
+    },
     nomorTelepon: '',
     nomorMobile: '',
     email: '',
     pendidikanTerakhir: '',
     keahlian: '',
-    pengalamanKerja: ''
+    pengalamanKerja: '',
+    statusNikah: ''
   }
   userData;
-  Divisi = [];
-  Jabatan = [];
-  Bagian = [];
-  Periode = [];
-  RekapPeriode = [];
-  selectedCity: any;
-  selectedRkp= {
-    idRkp: ''
-  };
-  date: Date;
-  minDate: Date;
   constructor(
     public ApiWithTokenService: ApiWithTokenService,
     public router : Router,
     public CookieService : CookieService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private activeRoute: ActivatedRoute,
   ) { 
-    this.minDate = new Date();
-    this.date = new Date();
-    this.date.setDate( this.date.getDate() + 365 );
-    let x: any = [
-      this.datePipe.transform(Date.now(),'yyyy'),
-      this.datePipe.transform(this.date, 'yyyy'),
-    ]
-    this.RekapPeriode = x;
-    this.Periode = [
-      {
-        name:'TW1'
-      },
-      {
-        name:'TW2'
-      },
-      {
-        name:'TW3'
-      },
-      {
-        name:'TW4'
-      }
-    ]
+   
   }
 
   ngOnInit(): void {
     this.user();
-    this.getLokasi();
+    this.viewById();
   }
 
   ngOnDestroy() {
@@ -105,66 +82,77 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
     console.log(this.userData);
   }
 
-  getLokasi() {
-    const apiUrl = 'Cabang/getBranchById/'+this.userData.branch_code
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
-    .pipe(
-      takeUntil(this.subs))
-    .subscribe(x => {
-      const lokasi = x.data.map(x=> {
-        const data = {
-          lokasiName: x.branch_code+' - '+x.branch_name,
-          branch_code: x.branch_code
-        }
-        return data;
-      })
-      this.lokasi = lokasi[0].lokasiName;
+
+  viewById(){
+    this.activeRoute.params.subscribe(params => {
+      const data = {
+        id: params.id
+      }
+      this.ApiWithTokenService.getById(data, 'kandidat/getKandidatById/', this.userData.token)
+      .pipe(
+        takeUntil(this.subs))
+      .subscribe(res => {
+        console.log(res.data[0]);
+        this.dataKandidat.idLoker = res.data[0].id_lowongan;
+        this.dataKandidat.nama = res.data[0].nm_pelamar;
+        this.dataKandidat.tempatLahir = res.data[0].tmp_lahir;
+        this.dataKandidat.tanggalLahir = res.data[0].tgl_lahir;
+        this.dataKandidat.gender = res.data[0].gender;
+        this.dataKandidat.alamat = res.data[0].alamat;
+        this.dataKandidat.nomorTelepon = res.data[0].telepon;
+        this.dataKandidat.nomorMobile = res.data[0].hp;
+        this.dataKandidat.email = res.data[0].email_pelamar;
+        this.dataKandidat.pendidikanTerakhir = res.data[0].last_education;
+        this.dataKandidat.keahlian = res.data[0].keahlian;
+        this.dataKandidat.pengalamanKerja = res.data[0].working_experience;
+        this.dataKandidat.statusNikah = res.data[0].marital_status;
+        this.getProvinsi(res.data[0].id_provinsi);
+        this.getKota(res.data[0].id_provinsi, res.data[0].id_kotamadya);
+      }) 
     })
   }
 
-  getJabatan() {
-    const apiUrl = 'setupJabatan/getSetupJabatanByDivisi/'+this.userData.divisi
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+  getProvinsi(ev){
+    this.ApiWithTokenService.getAll('Kandidat/showAllProvinsi', this.userData.token)
     .pipe(
       takeUntil(this.subs))
-    .subscribe(x => {
-      this.Jabatan = x.data;
-      console.log(this.Jabatan);
+    .subscribe(res => {
+      this.dataKandidat.provinsi = res.data.filter(x => {
+        return x.id == ev;
+      })[0];
+      this.Provinsi = res.data;
+      console.log(res.data, ev);
     })
   }
 
-  selectJabatan(ev){
+  selectProvinsi(ev) {
     console.log(ev);
   }
 
-  getBagian() {
-    const apiUrl = 'bagian/getBagianBySetupJabatan/'+this.userData.divisi
-    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+  getKota(ev, kota){
+    const data = {
+      id : ev
+    }
+    this.ApiWithTokenService.getById(data, 'kandidat/getKotaByProvinsi/', this.userData.token)
     .pipe(
       takeUntil(this.subs))
-    .subscribe(x => {
-      this.Bagian = x.data;
-      console.log(this.Bagian);
+    .subscribe(res => {
+      this.dataKandidat.kota = res.data.filter(x => {
+        return x.province_id == kota;
+      })[0];
+      this.Kota = res.data;
+      console.log(res.data, ev, kota);
+      console.log(this.dataKandidat);
+      
     })
   }
-
-  
-  // Prevent panel toggle code
-  public beforeChange($event: NgbPanelChangeEvent) {
-    if ($event.panelId === '2') {
-      $event.preventDefault();
-    }
-    if ($event.panelId === '3' && $event.nextState === false) {
-      $event.preventDefault();
-    }
-  };
 
   cancel(){
     this.router.navigate(['kandidat/data-table']);
   }
   
 
-  addRkp(){
+  editKandidat(){
 
   }
 

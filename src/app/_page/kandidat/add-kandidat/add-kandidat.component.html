@@ -1,4 +1,4 @@
-<div class="row text-left">
+<!-- <div class="row text-left">
   <div class="col-12">
     <div class="card">
       <div class="card-header">
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="row text-left">
   <div class="col-sm-12">
@@ -49,7 +49,7 @@
 
       <div class="card-content">
         <div class="card-body">
-          <form class="form" #kandidat="ngForm">
+          <form class="form" (ngSubmit)="addKandidat()" #kandidat="ngForm">
             <div class="row">
               <div class="col-12 mb-2">
                 <fieldset class="form-group">
@@ -60,24 +60,25 @@
                     diisi!!</small>
                 </fieldset>
               </div>
-              <div class="col-12 mb-2">
+              <!-- <div class="col-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Nomor Identitas</label>
                   <input class="form-control input-md " autocomplete="off" #nomorIdentitas="ngModel" id="nomorIdentitas"
                     name="nomorIdentitas" [(ngModel)]="dataKandidat.nomorIdentitas" type="number" min="1">
-                  <!-- <small class="form-text text-muted danger"
+                  <small class="form-text text-muted danger"
                     *ngIf="!nomorIdentitas.valid && (nomorIdentitas.dirty || nomorIdentitas.touched)">Wajib
-                    diisi!!</small> -->
+                    diisi!!</small>
                 </fieldset>
-              </div>
+              </div> -->
               <div class="col-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Email</label>
-                  <input class="form-control input-md " autocomplete="off" #email="ngModel" required id="email"
-                    name="email" [(ngModel)]="dataKandidat.email" type="email">
+                  <input class="form-control input-md " (ngModelChange)="checkEmail($event)" autocomplete="off"
+                    #email="ngModel" required id="email" name="email" [(ngModel)]="dataKandidat.email" type="email">
                   <small class="form-text text-muted danger"
                     *ngIf="!email.valid && (email.dirty || email.touched)">Wajib
                     diisi!!</small>
+                  <small class="form-text text-muted danger" *ngIf="checkerEmail">{{messageStatusEmail}}</small>
                 </fieldset>
               </div>
               <div class="col-12 mb-2">
@@ -90,7 +91,20 @@
                   </select>
                   <small class="form-text text-muted danger"
                     *ngIf="!gender.valid && (gender.dirty || gender.touched)">Wajib
-                    diisi!!</small>
+                    Dipilih!!</small>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-2">
+                <fieldset class="form-group">
+                  <label for="periode">Gender</label>
+                  <select id="projectinput6" [(ngModel)]="dataKandidat.statusNikah" #statusNikah="ngModel" required name="statusNikah"
+                    class="form-control">
+                    <option value="Single" selected>Single</option>
+                    <option value="MERID">Merried</option>
+                  </select>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!statusNikah.valid && (statusNikah.dirty || statusNikah.touched)">Wajib
+                    Dipilih!!</small>
                 </fieldset>
               </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
@@ -106,8 +120,8 @@
               <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Tanggal Lahir</label>
-                  <input class="form-control input-md " autocomplete="off" #tanggalLahir="ngModel" required
-                    id="tanggalLahir" name="tanggalLahir" [(ngModel)]="dataKandidat.tanggalLahir" type="text">
+                  <input bsDatepicker class="form-control input-md " autocomplete="off" #tanggalLahir="ngModel" required
+                    id="tanggalLahir" name="tanggalLahir" [(ngModel)]="dataKandidat.tanggalLahir">
                   <small class="form-text text-muted danger"
                     *ngIf="!tanggalLahir.valid && (tanggalLahir.dirty || tanggalLahir.touched)">Wajib
                     diisi!!</small>
@@ -116,8 +130,9 @@
               <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Provinsi</label>
-                  <input class="form-control input-md " autocomplete="off" #provinsi="ngModel" required id="provinsi"
-                    name="provinsi" [(ngModel)]="dataKandidat.provinsi" type="text">
+                  <ng-select (ngModelChange)="selectProvinsi($event)" [items]="Provinsi" bindLabel="name"
+                    [(ngModel)]="dataKandidat.provinsi" name="provinsi" id="provinsi" #provinsi="ngModel">
+                  </ng-select>
                   <small class="form-text text-muted danger"
                     *ngIf="!provinsi.valid && (provinsi.dirty || provinsi.touched)">Wajib
                     diisi!!</small>
@@ -126,8 +141,9 @@
               <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Kota</label>
-                  <input class="form-control input-md " autocomplete="off" #kota="ngModel" required id="kota"
-                    name="kota" [(ngModel)]="dataKandidat.kota" type="text">
+                  <ng-select [items]="Kota" bindLabel="name" [(ngModel)]="dataKandidat.kota" name="kota" id="kota"
+                    #kota="ngModel">
+                  </ng-select>
                   <small class="form-text text-muted danger" *ngIf="!kota.valid && (kota.dirty || kota.touched)">Wajib
                     diisi!!</small>
                 </fieldset>

@@ -94,7 +94,7 @@
               ngbTooltip="Ubah Status Loker">
               <i class="ft-check-circle font-medium-3 mr-2"></i>
             </a>
-            <a class="warning p-0" data-original-title="" title="" (click)="kandidat(value)"
+            <a class="warning p-0" *ngIf="rows[rowIndex].hiddenEditByStatus" data-original-title="" title="" (click)="kandidat(value)"
               ngbTooltip="Pilih Kandidat">
               <i class="ft-user font-medium-3 mr-2"></i>
             </a>

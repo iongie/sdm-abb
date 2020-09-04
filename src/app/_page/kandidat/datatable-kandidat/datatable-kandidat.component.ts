@@ -20,40 +20,7 @@ export class DatatableKandidatComponent implements OnInit {
     show: ''
   }
   rows = [
-    {
-      id: '1',
-      branch: 'x.branch_code'+' - '+'x.branch_name',
-      divisi: 'x.nm_divisi',
-      jabatan: 'x.nm_jabatan',
-      bagian: 'x.nm_bagian',
-      periode: 'x.rkap_periode' + '-' +'x.periode_pelaksanaan',
-      pegawai: 'x.jml_personil_plan',
-      gender: 'x.gender',
-      requirementSkill: 'x.requirement_skill',
-      requirementDegree: 'x.requirement_degree',
-      maxAge: 'x.max_age',
-      minAge: 'x.min_age',
-      requestPersonil: 'x.jml_req',
-      startDate: 'x.due_date',
-      endDate: 'x.end_date',
-      status: 'x.status',
-      nama: 'x.nama',
-      nomorIdentitas: 'x.nomor_identitas',
-      tempatLahir: 'x.tmp_lahir',
-      tanggalLahir : 'x.tgl_lahir',
-      genderPelamar: 'x.gender_kandidat',
-      alamat: 'x.alamat',
-      provinsi: 'x.provinsi',
-      kota: 'x.kota',
-      kecamatan: 'x.kecamatan',
-      kelurahan: 'x.kelurahan',
-      nomorTelepon: 'x.nomor_tlp',
-      nomorMobile: 'x.nomor_mobile',
-      email: 'x.email',
-      pendidikanTerakhir: 'x_pndidikan_terakhir',
-      keahlian: 'x.keahlian',
-      pengalamanKerja: 'x.pengalaman_kerja'
-    }
+    
   ];
   userData;
   dataApproval = {
@@ -97,7 +64,7 @@ export class DatatableKandidatComponent implements OnInit {
 
   ngOnInit(): void {
     this.user();
-    // this.loker();
+    this.kandidat();
     this.refresh();
   }
 
@@ -126,28 +93,43 @@ export class DatatableKandidatComponent implements OnInit {
     console.log(this.userData);
   }
 
-  loker(){
-    this.ApiWithTokenService.getAll('requestKaryawan/showAlldata', this.userData.token).subscribe( res => {
+  kandidat(){
+    this.ApiWithTokenService.getAll('kandidat/showAllKandidat', this.userData.token).subscribe( res => {
       this.rows = res.data.map(x => {
         const data = {
-          id: x.id,
-          branch: x.branch_code+' - '+x.branch_name,
-          divisi: x.nm_divisi,
-          jabatan: x.nm_jabatan,
-          bagian: x.nm_bagian,
-          periode: x.rkap_periode + '-' +x.periode_pelaksanaan,
-          pegawai: x.jml_personil_plan,
+          alamat: x.alamat,
+          created_by: x.created_by,
+          created_date: x.created_date,
+          document: x.document,
+          email_pelamar: x.email_pelamar,
           gender: x.gender,
-          requirementSkill: x.requirement_skill,
-          requirementDegree: x.requirement_degree,
-          maxAge: x.max_age,
-          minAge: x.min_age,
-          requestPersonil: x.jml_req,
-          startDate: x.due_date,
+          hp: x.hp,
+          id: x.id,
+          id_hasil: x.id_hasil,
+          id_jadwal: x.id_jadwal,
+          id_kotamadya: x.id_kotamadya,
+          id_lowongan: x.id_lowongan,
+          id_provinsi: x.id_provinsi,
+          keahlian: x.keahlian,
+          last_education: x.last_education,
+          marital_status: x.marital_status,
+          nm_kota: x.nm_kota,
+          nm_pelamar: x.nm_pelamar,
+          nm_provinsi: x.nm_provinsi,
+          no_ktp: x.no_ktp,
+          path: x.path,
           status: x.status,
+          telepon: x.telepon,
+          tgl_lahir: x.tgl_lahir,
+          tmp_lahir: x.tmp_lahir,
+          updated_by: x.updated_by,
+          updated_date: x.updated_date,
+          working_experience: x.working_experience,
+          hiddenEditByJadwalKandidat: (x.status == 'on process')? true: false
         };
-        return data;
-      });
+
+        return data
+      })
       console.log(res.data);
     })
   }
@@ -251,7 +233,7 @@ export class DatatableKandidatComponent implements OnInit {
 
   refresh() {
     this.ApiWithTokenService.refresh.subscribe(() => {
-      this.loker();
+      this.kandidat();
     });
   }
 
