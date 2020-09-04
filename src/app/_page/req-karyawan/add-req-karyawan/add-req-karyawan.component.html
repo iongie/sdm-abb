@@ -45,7 +45,8 @@
             <aw-wizard-step [stepTitle]="'Request Kebutuhan'"
               [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
               <form class="form" #f="ngForm">
-                <div class="row">
+                <!-- jika kondisi yes -->
+                <div *ngIf="this.rpk.condition == 'yes'" class="row">
                   <div class="col-xl-6 col-lg-6 col-md-12">
                     <div class="form-group">
                       <label for="minDate">Start Date</label>
@@ -68,8 +69,8 @@
                   </div>
                   <div class="col-12 mb-2">
                     <label for="floatEmail">RKAP</label>
-                    <ng-select [items]="RekapPeriode" bindLabel="tampil" [(ngModel)]="selectedRkp.idRkp"
-                      name="idRkp" id="idRkp" #idRkp="ngModel" (ngModelChange)="selectRkap($event)">
+                    <ng-select [items]="RekapPeriode" bindLabel="tampil" [(ngModel)]="selectedRkp.idRkp" name="idRkp"
+                      id="idRkp" #idRkp="ngModel" (ngModelChange)="selectRkap($event)">
                     </ng-select>
                     <small class="form-text text-muted danger"
                       *ngIf="!idRkp.valid && (idRkp.dirty || idRkp.touched) ">Silahkan Pilih RKAP</small>
@@ -115,8 +116,67 @@
                     </fieldset>
                   </div>
                 </div>
+                <!-- jika kondisi yes -->
+
+                <!-- jika kondisi no -->
+                <div class="row" *ngIf="this.rpk.condition == 'no'">
+                  <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="form-group">
+                      <label for="minDate">Start Date</label>
+                      <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.startDate" name="startDate"
+                        id="startDate" #startDate="ngModel" required [minDate]="minDate" autocomplete="off" />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!startDate.valid && (startDate.dirty || startDate.touched) && startDate.errors?.minDate">minDate
+                        error</small>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12">
+                    <div class="form-group">
+                      <label for="minDate">End Date</label>
+                      <input bsDatepicker class="form-control" [(ngModel)]="dataReqKaryawan.endDate" name="endDate"
+                        id="endDate" #endDate="ngModel" required autocomplete="off" />
+                      <small class="form-text text-muted danger"
+                        *ngIf="!endDate.valid && (endDate.dirty || endDate.touched) && endDate.errors?.minDate">minDate
+                        error</small>
+                    </div>
+                  </div>
+                  <div class="col-12 mb-2">
+                    <label for="floatEmail">Lokasi</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Divisi</label>
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{divisi}}</div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Jabatan</label>
+                    <ng-select (ngModelChange)="selectJabatan($event)" [items]="Jabatan" bindLabel="nm_jabatan"
+                      [(ngModel)]="selectedJabatan.idJabatan" name="idJabatan" id="idJabatan" #idJabatan="ngModel">
+                    </ng-select>
+                    <small class="form-text text-muted danger"
+                      *ngIf="!idJabatan.valid && (idJabatan.dirty || idJabatan.touched) ">Silahkan Pilih Jabatan</small>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <label for="floatEmail">Job Title</label>
+                    <ng-select (ngModelChange)="selectBagian($event)" [items]="Bagian" bindLabel="jobtitle" [(ngModel)]="selectedBagian.idBagian"
+                      name="idBagian" id="idBagian" #idBagian="ngModel">
+                    </ng-select>
+                    <small class="form-text text-muted danger"
+                      *ngIf="!idBagian.valid && (idBagian.dirty || idBagian.touched) ">Silahkan Pilih Job Title</small>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+                    <fieldset class="form-group">
+                      <label for="periode">Personel</label>
+                      <input class="form-control input-md " autocomplete="off" #personil="ngModel" required
+                        id="personil" name="personil" [(ngModel)]="dataReqKaryawan.personil" type="number" min="1">
+                      <small class="form-text text-muted danger"
+                        *ngIf="!personil.valid && (personil.dirty || personil.touched)">Wajib diisi!!</small>
+                    </fieldset>
+                  </div>
+                </div>
+                <!-- jika kondisi no -->
                 <div class="form-group text-center">
-                  <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                  <button uiSref="personal" type="button" (click)="cleanForm()" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
                     <span style="margin-right:10px;">
                       <i class="ft-chevron-left"></i>
                     </span> Previous</button>
@@ -200,7 +260,7 @@
 
                       <div class="col-xl-12 col-lg-12 col-md-12">
                         <fieldset class="form-group">
-                          <label for="placeTextarea">ALasan Kebutuhan</label>
+                          <label for="placeTextarea">Alasan Kebutuhan</label>
                           <textarea class="form-control" id="reason" name="reason" #reason="ngModel" required
                             [(ngModel)]="formKualifikasi.reason" rows="3" placeholder="Keahlian"
                             autocomplete="off"></textarea>

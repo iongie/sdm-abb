@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./_layout/full/full.module').then(m => m.FullModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

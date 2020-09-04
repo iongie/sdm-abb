@@ -1,0 +1,84 @@
+<!--Paging dataTable starts-->
+<section id="paging" class="mb-3 mt-3">
+  <div class="d-flex justify-content-between bd-highlight">
+    <div class="p-2 bd-highlight"><input type='text' class="p-2 form-control" placeholder='Search...'
+        (keyup)='updateFilter($event)' /></div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+        [rowHeight]="'auto'" [limit]="10" [scrollbarV]="false" [scrollbarH]="false">
+        <ngx-datatable-column name="Tanggal" sortable="false" prop="jabatan">
+          <ng-template let-row="rows" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <span>{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Reward" sortable="false" prop="branch">
+          <ng-template let-row="rows" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <span>{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Deskripsi" sortable="false" prop="divisi">
+          <ng-template let-row="rows" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <span>{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Status" sortable="false" prop="status">
+          <ng-template let-row="data" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <span class="badge badge-primary badge-pill">{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Actions" sortable="false" prop="id">
+          <ng-template let-row="data" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+            <a class="success p-0" data-original-title="" title="" (click)="openModalApproval(value, $event, content)">
+              <i class="ft-check-circle font-medium-3 mr-2"></i>
+            </a>
+            <a class="p-0" data-original-title="" title="">
+              <i class="ft-printer  font-medium-3 mr-2"></i>
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+</section>
+<!--Paging dataTable starts-->
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Status</h4>
+    <button type="button" class="close" (click)="d('Cross click')">
+      <span>&times;</span>
+    </button>
+  </div>
+  <form class="form" #f="ngForm">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12 mb-2">
+          <label>Status</label>
+          <select class="form-control" [(ngModel)]="dataApproval.flag" #flag="ngModel" id="flag" name="flag" required>
+            <option value="approved" selected>Approved</option>
+            <option value="declined">Desclined</option>
+            <option value="pending">Pending</option>
+          </select>
+          <small class="form-text text-muted danger" *ngIf="!flag.valid && (flag.dirty || flag.touched)">Silahkan
+            Pilih Status</small>
+        </div>
+        <div class="col-12 mb-2">
+          <label>Description</label>
+          <textarea class="form-control" #description="ngModel" id="description" name="description"
+            #description="ngModel" required [(ngModel)]="dataApproval.description" rows="3"
+            autocomplete="off"></textarea>
+          <small class="form-text text-muted danger"
+            *ngIf="!description.valid && (description.dirty || description.touched)">Wajib
+            diisi!!</small>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-danger btn-raised" (click)="approval()" (click)="c('Close click')"
+        [disabled]="!f.valid">Process</button>
+    </div>
+  </form>
+</ng-template>

@@ -32,7 +32,7 @@ export const ROUTES: RouteInfo[] = [
             { path: '/kontrak-kerja/data-table', title: 'Kontrak Kerja', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/data-pegawai/data-table', title: 'Data Pegawai', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
             { path: '/reward/data-table', title: 'Reward', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], },
-            { path: '/reward/data-table', title: 'Punisment', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], },
+            { path: '/punisment/data-table', title: 'Punisment', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], },
             { path: '/reimbursement/data-table', title: 'Reimbursement', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], },
         ]
     },

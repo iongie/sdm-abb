@@ -230,8 +230,12 @@ export class DatatableDataPegawaiComponent implements OnInit {
     this.router.navigate(['data-pegawai/view/'+ev])
   }
 
-  kandidat(ev){
-    this.router.navigate(['data-pegawai/add/'+ev]);
+  punisment(ev){
+    this.router.navigate(['punisment/add/'+ev]);
+  }
+
+  reward(ev){
+    this.router.navigate(['reward/add/'+ev]);
   }
 
   limit(ev){

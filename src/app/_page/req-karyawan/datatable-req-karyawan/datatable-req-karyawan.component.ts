@@ -52,6 +52,7 @@ export class DatatableReqKaryawanComponent implements OnInit, OnDestroy {
   SelectionType = SelectionType;
   @ViewChild(DatatableComponent, {static: false}) table: DatatableComponent;
   closeResult: string;
+  hidden: boolean;
   // ColumnMode = ColumnMode;
   constructor(
     public ApiWithTokenService: ApiWithTokenService,
@@ -111,11 +112,12 @@ export class DatatableReqKaryawanComponent implements OnInit, OnDestroy {
           minAge: x.min_age,
           requestPersonil: x.jml_req,
           startDate: x.due_date,
-          status: x.status
+          status: x.status,
+          hiddenEditByStatus: (x.status == 'approved')? true: false
         };
         return data;
       });
-      console.log(res.data);
+      console.log(this.rows);
       this.temp = this.rows;
     })
   }

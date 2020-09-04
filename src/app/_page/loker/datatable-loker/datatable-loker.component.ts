@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs/operators';
 import swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
 
 // Success Type Alert
 export function typeSuccess() {
@@ -25,26 +26,7 @@ export class DatatableLokerComponent implements OnInit {
   limitTableShow = {
     show: ''
   }
-  rows = [
-    {
-      id: '1',
-      branch: 'x.branch_code'+' - '+'x.branch_name',
-      divisi: 'x.nm_divisi',
-      jabatan: 'x.nm_jabatan',
-      bagian: 'x.nm_bagian',
-      periode: 'x.rkap_periode' + '-' +'x.periode_pelaksanaan',
-      pegawai: 'x.jml_personil_plan',
-      gender: 'x.gender',
-      requirementSkill: 'x.requirement_skill',
-      requirementDegree: 'x.requirement_degree',
-      maxAge: 'x.max_age',
-      minAge: 'x.min_age',
-      requestPersonil: 'x.jml_req',
-      startDate: 'x.due_date',
-      endDate: 'x.end_date',
-      status: 'x.status' 
-    }
-  ];
+  rows = [];
   userData;
   dataApproval = {
     id: '',
@@ -79,7 +61,8 @@ export class DatatableLokerComponent implements OnInit {
     public ApiWithTokenService: ApiWithTokenService,
     public router : Router,
     public CookieService: CookieService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private datePipe: DatePipe
   ) {
     this.limitTableShow.show = "5";
     this.temp = this.rows;
@@ -87,7 +70,7 @@ export class DatatableLokerComponent implements OnInit {
 
   ngOnInit(): void {
     this.user();
-    // this.loker();
+    this.loker();
     this.refresh();
   }
 
@@ -117,10 +100,17 @@ export class DatatableLokerComponent implements OnInit {
   }
 
   loker(){
-    this.ApiWithTokenService.getAll('requestKaryawan/showAlldata', this.userData.token).subscribe( res => {
+    this.ApiWithTokenService.getAll('LowonganKerja/showLowongan', this.userData.token).subscribe( res => {
       this.rows = res.data.map(x => {
         const data = {
           id: x.id,
+          id_divisi: x.id_divisi,
+          id_jabatan: x.id_jabatan,
+          id_lowongan: x.id_lowongan,
+          id_request: x.id_request,
+          branch_code: x.branch_code,
+          branch_name: x.branch_name,
+          date_publish: x.date_publish,
           branch: x.branch_code+' - '+x.branch_name,
           divisi: x.nm_divisi,
           jabatan: x.nm_jabatan,
@@ -134,7 +124,9 @@ export class DatatableLokerComponent implements OnInit {
           minAge: x.min_age,
           requestPersonil: x.jml_req,
           startDate: x.due_date,
-          status: x.status
+          status: x.status,
+          working_experience: x.working_experience,
+          hiddenEditByStatus: (x.status == 'published')? true: false
         };
         return data;
       });
@@ -202,10 +194,10 @@ export class DatatableLokerComponent implements OnInit {
 
   approval(){
     const data = {
-      id: this.dataApproval.id,
-      flag_approval: this.dataApproval.flag,
-      start_date: this.dataApproval.start_date,
-      end_date: this.dataApproval.end_date,
+      id_lowongan: this.dataApproval.id,
+      flag: this.dataApproval.flag,
+      start_date: this.datePipe.transform(this.dataApproval.start_date, 'yyyy-dd-MM'),
+      end_date: this.datePipe.transform(this.dataApproval.end_date, 'yyyy-dd-MM'),
       description: this.dataApproval.description,
       user_proses: this.userData.email
     }
@@ -214,6 +206,14 @@ export class DatatableLokerComponent implements OnInit {
       takeUntil(this.subs))
     .subscribe(res => {
       typeSuccess();
+      this.dataApproval = {
+        id: '',
+        description:'',
+        flag: '',
+        start_date: '',
+        end_date: '',
+        user_proses: ''
+      }
     })
   }
 

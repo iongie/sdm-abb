@@ -211,6 +211,10 @@ export class EditRkpComponent implements OnInit, OnDestroy {
     }
   };
 
+  cancel(){
+    this.router.navigate(['/rencana-kebutuhan-pegawai/view']);
+  }
+
   editRkp(){
 
   }

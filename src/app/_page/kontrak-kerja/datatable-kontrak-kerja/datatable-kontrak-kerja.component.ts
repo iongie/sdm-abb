@@ -200,6 +200,15 @@ export class DatatableKontrakKerjaComponent implements OnInit {
     });
   }
 
+  modalSpk(content){
+    // ev.target.closest('datatable-body-cell').blur()
+    this.modalService.open(content, { size: 'xl' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
   approval(){
     const data = {
       id: this.dataApproval.id,
@@ -243,6 +252,10 @@ export class DatatableKontrakKerjaComponent implements OnInit {
     this.ApiWithTokenService.refresh.subscribe(() => {
       this.loker();
     });
+  }
+
+  newSpk(ev){
+    this.router.navigate(['kontrak-kerja/add/'+ev])
   }
 
 }

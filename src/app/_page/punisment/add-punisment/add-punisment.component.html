@@ -1,0 +1,94 @@
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">Nama: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">Gigih Santoso</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="projectinput1">Divisi: </label>
+                  <div class="col-md-8">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">IT</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" for="projectinput1">NIK: </label>
+                  <div class="col-md-9">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">0000000000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="projectinput1">Job Title: </label>
+                  <div class="col-md-8">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">Staff IT</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Punisment</h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <form class="form" #f="ngForm">
+            <div class="row">
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="minDate">Punisment </label>
+                    <input bsDatepicker class="form-control" [(ngModel)]="dataPunisment.nama" name="nama" id="nama"
+                      #nama="ngModel" required [minDate]="minDate" autocomplete="off" />
+                    <small class="form-text text-muted danger"
+                      *ngIf="!nama.valid && (nama.dirty || nama.touched) && nama.errors?.minDate">minDate
+                      error</small>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="minDate">Description</label>
+                  <textarea class="form-control" id="desc" name="desc" #desc="ngModel" required
+                    [(ngModel)]="dataPunisment.desc" rows="3" placeholder="desc" autocomplete="off"></textarea>
+                  <small class="form-text text-muted danger"
+                    *ngIf="!desc.valid && (desc.dirty || desc.touched) && desc.errors?.minDate">minDate
+                    error</small>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12 text-right">
+                <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
+                <button type="button" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

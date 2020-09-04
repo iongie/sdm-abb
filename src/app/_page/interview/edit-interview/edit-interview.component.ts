@@ -148,6 +148,10 @@ export class EditInterviewComponent implements OnInit {
     }
   };
 
+  cancel(){
+    this.router.navigate(['interview/data-table']);
+  }
+
   addRkp(){
 
   }

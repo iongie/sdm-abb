@@ -148,6 +148,10 @@ export class AddInterviewComponent implements OnInit, OnDestroy {
     }
   };
 
+  cancel(){
+    this.router.navigate(['kandidat/data-table']);
+  }
+
   addRkp(){
 
   }

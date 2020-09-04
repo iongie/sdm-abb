@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SelectionType, DatatableComponent } from '@swimlane/ngx-datatable';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export function typeSuccess() {
   templateUrl: './hasil-interview.component.html',
   styleUrls: ['./hasil-interview.component.css']
 })
-export class HasilInterviewComponent implements OnInit {
+export class HasilInterviewComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   temp = [];
   limitTableShow = {
@@ -65,9 +65,10 @@ export class HasilInterviewComponent implements OnInit {
     id: '',
     description:'',
     flag: '',
-    start_date: '',
-    end_date: '',
-    user_proses: ''
+    gajiYangDitawarkan: '',
+    gajiYangDiinginkan: '',
+    user_proses: '',
+    bersediaMasuk: ''
   }
   columns = [
     {
@@ -219,8 +220,8 @@ export class HasilInterviewComponent implements OnInit {
     const data = {
       id: this.dataApproval.id,
       flag_approval: 'published',
-      start_date: this.dataApproval.start_date,
-      end_date: this.dataApproval.end_date,
+      start_date: this.dataApproval.gajiYangDiinginkan,
+      end_date: this.dataApproval.gajiYangDitawarkan,
       description: this.dataApproval.description,
       user_proses: this.userData.email
     }
@@ -259,5 +260,6 @@ export class HasilInterviewComponent implements OnInit {
       this.interview();
     });
   }
+  
 
 }

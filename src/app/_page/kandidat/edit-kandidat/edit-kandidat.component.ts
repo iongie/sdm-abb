@@ -159,6 +159,11 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
     }
   };
 
+  cancel(){
+    this.router.navigate(['kandidat/data-table']);
+  }
+  
+
   addRkp(){
 
   }

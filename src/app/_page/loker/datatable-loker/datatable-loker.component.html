@@ -22,13 +22,9 @@
     <div class="col-sm-12">
       <ngx-datatable class="bootstrap" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
         [rowHeight]="'auto'" [limit]="10" [scrollbarV]="false" [scrollbarH]="false">
-        <ngx-datatable-row-detail [rowHeight]="500" #myDetailRow (toggle)="onDetailToggle($event)">
+        <ngx-datatable-row-detail [rowHeight]="600" #myDetailRow (toggle)="onDetailToggle($event)">
           <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
             <div class="row">
-              <div class="col-12 mb-2">
-                <label for="floatEmail">Periode</label>
-                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{row.periode}}</div>
-              </div>
               <div class="col-12 mb-2">
                 <label for="floatEmail">Gender</label>
                 <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{row.gender}}</div>
@@ -48,6 +44,10 @@
               <div class="col-12 mb-2">
                 <label for="floatEmail">Keahlian</label>
                 <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{row.requirementSkill}}</div>
+              </div>
+              <div class="col-12 mb-2">
+                <label for="floatEmail">Pengalaman Kerja</label>
+                <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{row.working_experience}}</div>
               </div>
             </div>
           </ng-template>
@@ -85,18 +85,20 @@
             <span class="badge badge-primary badge-pill">{{value}}</span>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="Actions" sortable="false" prop="id">
+        <ngx-datatable-column name="Actions" sortable="false" prop="id_lowongan">
           <ng-template let-row="data" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-            <a class="success p-0" data-original-title="" title="" (click)="update(value)">
+            <a class="success p-0" data-original-title="" title="" (click)="update(value)" ngbTooltip="Update Loker">
               <i class="ft-edit-2 font-medium-3 mr-2"></i>
             </a>
-            <a class="danger p-0" data-original-title="" title="" (click)="openModalApproval(value, $event, content)">
+            <a class="danger p-0" *ngIf="!rows[rowIndex].hiddenEditByStatus" data-original-title="" title="" (click)="openModalApproval(value, $event, content)"
+              ngbTooltip="Ubah Status Loker">
               <i class="ft-check-circle font-medium-3 mr-2"></i>
             </a>
-            <a class="warning p-0" data-original-title="" title="" (click)="kandidat(value)">
+            <a class="warning p-0" data-original-title="" title="" (click)="kandidat(value)"
+              ngbTooltip="Pilih Kandidat">
               <i class="ft-user font-medium-3 mr-2"></i>
             </a>
-            <a class="p-0" data-original-title="" title="">
+            <a class="p-0" data-original-title="" title="" ngbTooltip="Print Data Loker">
               <i class="ft-printer  font-medium-3 mr-2"></i>
             </a>
           </ng-template>
@@ -117,16 +119,34 @@
   <form class="form" #f="ngForm">
     <div class="modal-body">
       <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12">
+          <div class="form-group">
+            <label for="minDate">Start Date</label>
+            <input bsDatepicker class="form-control" [(ngModel)]="dataApproval.start_date" name="start_date"
+              id="start_date" #start_date="ngModel" required [minDate]="minDate" autocomplete="off" />
+            <small class="form-text text-muted danger"
+              *ngIf="!start_date.valid && (start_date.dirty || start_date.touched) && start_date.errors?.minDate">minDate
+              error</small>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+          <div class="form-group">
+            <label for="minDate">End Date</label>
+            <input bsDatepicker class="form-control" [(ngModel)]="dataApproval.end_date" name="end_date" id="end_date"
+              #end_date="ngModel" required autocomplete="off" />
+            <small class="form-text text-muted danger"
+              *ngIf="!end_date.valid && (end_date.dirty || end_date.touched) && end_date.errors?.minDate">minDate
+              error</small>
+          </div>
+        </div>
         <div class="col-12 mb-2">
           <label>Status</label>
-          <select class="form-control" [(ngModel)]="dataApproval.flag" #flag="ngModel"
-            id="flag" name="flag" required>
-            <option value="approved" selected>Approved</option>
-            <option value="declined">Desclined</option>
+          <select class="form-control" [(ngModel)]="dataApproval.flag" #flag="ngModel" id="flag" name="flag" required>
+            <option value="published" selected>Published</option>
+            <option value="unpublished">unpublished</option>
             <option value="pending">Pending</option>
           </select>
-          <small class="form-text text-muted danger"
-            *ngIf="!flag.valid && (flag.dirty || flag.touched)">Silahkan
+          <small class="form-text text-muted danger" *ngIf="!flag.valid && (flag.dirty || flag.touched)">Silahkan
             Pilih Status</small>
         </div>
         <div class="col-12 mb-2">

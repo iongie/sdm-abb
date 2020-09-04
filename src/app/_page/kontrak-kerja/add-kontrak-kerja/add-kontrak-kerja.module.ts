@@ -7,6 +7,7 @@ import { PipeModule } from 'src/app/_pipe/pipe.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 export const routes: Routes = [
   {
@@ -24,7 +25,8 @@ export const routes: Routes = [
     PipeModule,
     NgbModule,
     NgSelectModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgxDatatableModule
   ],
   providers: [
     DatePipe

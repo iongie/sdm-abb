@@ -87,16 +87,16 @@
           </ngx-datatable-column>
           <ngx-datatable-column name="Actions" sortable="false" prop="id">
             <ng-template let-row="data" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-              <a class="success p-0" data-original-title="" title="" (click)="update(value)">
+              <a class="success p-0" data-original-title="" title="" (click)="update(value)" ngbTooltip="Update Interview">
                 <i class="ft-edit-2 font-medium-3 mr-2"></i>
               </a>
-              <a class="danger p-0" data-original-title="" title="" (click)="openModalApproval(value, $event, content)">
+              <!-- <a class="danger p-0" data-original-title="" title="" (click)="openModalApproval(value, $event, content)">
                 <i class="ft-check-circle font-medium-3 mr-2"></i>
-              </a>
-              <a class="danger p-0" data-original-title="" title="" (click)="hasilInterview(value)">
+              </a> -->
+              <a class="danger p-0" data-original-title="" title="" (click)="hasilInterview(value)" ngbTooltip="Buat Hasil Interview">
                 <i class="ft-book font-medium-3 mr-2"></i>
               </a>
-              <a class="p-0" data-original-title="" title="">
+              <a class="p-0" data-original-title="" title="" ngbTooltip="Print Data Interview">
                 <i class="ft-printer  font-medium-3 mr-2"></i>
               </a>
             </ng-template>

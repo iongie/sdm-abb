@@ -23,14 +23,19 @@ export class AddRkpComponent implements OnInit, OnDestroy {
   acc: any;
   lokasi;
   dataRkp = {
-    personil: 0,
+    personil: '',
     idDivisi: '',
     idBagian: '',
     idJabatan: '',
     createdBy: '',
     tahun: '',
-    periode: '',
-    branch_code: ''
+    periode: {
+      name:''
+    },
+    branch_code: {
+      branch_code: '',
+      lokasiName: ''
+    }
   }
   userData;
   Divisi = [];
@@ -140,6 +145,7 @@ export class AddRkpComponent implements OnInit, OnDestroy {
 
   selectDivisi(ev){
     this.getJabatan(ev.id);
+    this.dataRkp.idDivisi = ev.id;
   }
 
   getJabatan(idDivisi) {
@@ -154,6 +160,7 @@ export class AddRkpComponent implements OnInit, OnDestroy {
   }
 
   selectJabatan(ev){
+    this.dataRkp.idJabatan = ev.id;
     this.getBagian(ev.id);
   }
 
@@ -168,6 +175,10 @@ export class AddRkpComponent implements OnInit, OnDestroy {
     })
   }
 
+  selectBagian(ev){
+    this.dataRkp.idBagian = ev.id;
+  }
+
   
   // Prevent panel toggle code
   public beforeChange($event: NgbPanelChangeEvent) {
@@ -179,14 +190,18 @@ export class AddRkpComponent implements OnInit, OnDestroy {
     }
   };
 
+  cancel(){
+    this.router.navigate(['/rencana-kebutuhan-pegawai/view']);
+  }
+
   addRkp(){
     const data = {
-      rkap_periode: this.dataRkp.periode, 
+      rkap_periode: this.dataRkp.tahun, 
       id_divisi: this.dataRkp.idDivisi,
-      branch_code: this.dataRkp.branch_code,
+      branch_code: this.dataRkp.branch_code.branch_code,
       id_jabatan: this.dataRkp.idJabatan,
       id_bagian: this.dataRkp.idBagian,
-      periode: this.dataRkp.periode,
+      periode: this.dataRkp.periode.name,
       jml_personil: this.dataRkp.personil,
       created_by: this.userData.email
     };

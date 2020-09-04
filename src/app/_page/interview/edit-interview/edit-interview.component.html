@@ -21,21 +21,24 @@
                     *ngIf="!idKandidat.valid && (idKandidat.dirty || idKandidat.touched) ">Silahkan Pilih Request
                     Karyawan</small>
                 </div> -->
-                <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="minDate">Tanggal Interview</label>
-                    <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.tanggalInterview" name="tanggalInterview"
-                      id="tanggalInterview" #tanggalInterview="ngModel" required [minDate]="minDate" autocomplete="off" />
+                    <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.tanggalInterview"
+                      name="tanggalInterview" id="tanggalInterview" #tanggalInterview="ngModel" required
+                      [minDate]="minDate" autocomplete="off" />
                     <small class="form-text text-muted danger"
                       *ngIf="!tanggalInterview.valid && (tanggalInterview.dirty || tanggalInterview.touched) && tanggalInterview.errors?.minDate">minDate
                       error</small>
                   </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="col-12">
                   <div class="form-group">
                     <label for="minDate">Waktu Interview</label>
-                    <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.waktuInterview" name="waktuInterview"
-                      id="waktuInterview" #waktuInterview="ngModel" required [minDate]="minDate" autocomplete="off" />
+                    <timepicker [(ngModel)]="dataInterview.waktuInterview" name="waktuInterview" id="waktuInterview"
+                      #waktuInterview="ngModel"></timepicker>
+                    <!-- <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.waktuInterview" name="waktuInterview"
+                      id="waktuInterview" #waktuInterview="ngModel" required [minDate]="minDate" autocomplete="off" /> -->
                     <small class="form-text text-muted danger"
                       *ngIf="!waktuInterview.valid && (waktuInterview.dirty || waktuInterview.touched) && waktuInterview.errors?.minDate">minDate
                       error</small>
@@ -44,36 +47,36 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                   <fieldset class="form-group">
                     <label for="periode">PIC</label>
-                    <input class="form-control input-md " autocomplete="off" #PIC="ngModel" required id="PIC"
-                      name="PIC" [(ngModel)]="dataInterview.PIC" type="text">
+                    <input class="form-control input-md " autocomplete="off" #PIC="ngModel" required id="PIC" name="PIC"
+                      [(ngModel)]="dataInterview.PIC" type="text">
                     <small class="form-text text-muted danger" *ngIf="!PIC.valid && (PIC.dirty || PIC.touched)">Wajib
                       diisi!!</small>
                   </fieldset>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                   <fieldset class="form-group">
-                    <label for="periode">Tempat Interview</label>
-                    <input class="form-control input-md " autocomplete="off" #tempatInterview="ngModel" required
-                      id="tempatInterview" name="tempatInterview" [(ngModel)]="dataInterview.tempatInterview" type="number"
-                      min="1">
-                    <small class="form-text text-muted danger"
-                      *ngIf="!tempatInterview.valid && (tempatInterview.dirty || tempatInterview.touched)">Wajib
-                      diisi!!</small>
-                  </fieldset>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
-                  <fieldset class="form-group">
                     <label for="periode">Kontak PIC</label>
-                    <input class="form-control input-md " autocomplete="off" #kontakPIC="ngModel" required
-                      id="kontakPIC" name="kontakPIC" [(ngModel)]="dataInterview.kontakPIC" type="number">
+                    <input class="form-control input-md " autocomplete="off" #kontakPIC="ngModel" required id="kontakPIC"
+                      name="kontakPIC" [(ngModel)]="dataInterview.kontakPIC" type="number">
                     <small class="form-text text-muted danger"
                       *ngIf="!kontakPIC.valid && (kontakPIC.dirty || kontakPIC.touched)">Wajib
                       diisi!!</small>
                   </fieldset>
                 </div>
+                <div class="col-12 mb-2">
+                  <fieldset class="form-group">
+                    <label for="periode">Tempat Interview</label>
+                    <input class="form-control input-md " autocomplete="off" #tempatInterview="ngModel" required
+                      id="tempatInterview" name="tempatInterview" [(ngModel)]="dataInterview.tempatInterview"
+                      type="text" min="1">
+                    <small class="form-text text-muted danger"
+                      *ngIf="!tempatInterview.valid && (tempatInterview.dirty || tempatInterview.touched)">Wajib
+                      diisi!!</small>
+                  </fieldset>
+                </div>
   
                 <div class="form-group col-md-12 text-right">
-                  <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
+                  <button type="button" class="btn btn-success mr-2 btn-raised" (click)="cancel()">Cancel</button>
                   <button type="button" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
                 </div>
               </div>

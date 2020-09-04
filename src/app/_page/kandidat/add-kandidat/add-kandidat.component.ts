@@ -159,6 +159,10 @@ export class AddKandidatComponent implements OnInit, OnDestroy {
     }
   };
 
+  cancel(){
+    this.router.navigate(['lowongan-kerja/data-table']);
+  }
+  
   addRkp(){
 
   }

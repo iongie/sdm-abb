@@ -137,9 +137,8 @@ export class EditReqKaryawanComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.subs))  
       .subscribe(res => {
-        console.log(res);
-        
-        this.dataReqKaryawan = res.data[0]
+        this.dataReqKaryawan = res.data[0];
+        console.log(this.dataReqKaryawan);
         this.getrkap(this.dataReqKaryawan.id,this.dataReqKaryawan.id_divisi);
       })
     })

@@ -7,6 +7,7 @@ import { PipeModule } from 'src/app/_pipe/pipe.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule, TimepickerConfig, TimepickerActions } from 'ngx-bootstrap/timepicker';
 
 export const routes: Routes = [
   {
@@ -24,10 +25,13 @@ export const routes: Routes = [
     PipeModule,
     NgbModule,
     NgSelectModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TimepickerModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    TimepickerConfig,
+    TimepickerActions
   ]
 })
 export class AddInterviewModule { }

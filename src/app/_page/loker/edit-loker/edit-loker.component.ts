@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { takeUntil } from 'rxjs/operators';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
@@ -17,25 +17,54 @@ export class EditLokerComponent implements OnInit, OnDestroy {
   acc: any;
   lokasi;
   dataLoker = {
-    startDate: '',
-    endDate: '',
-    idReqKaryawan: '',
-    personil : ''
+    branch: '',
+    id_lowongan: '',
+    id_request: '',
+    branch_code: '',
+    branch_name : '',
+    id_divisi: '',
+    nm_divisi: '',
+    id_jabatan: '',
+    nm_jabatan : '',
+    requirement_skill: '',
+    requirement_degree: '',
+    gender: '',
+    min_age: '',
+    max_age: '',
+    due_date: '',
+    working_experience : '',
+    status: '',
+    created_date: '',
+    updated_date: '',
+    created_by : '',
+    updated_by : '',
+    date_publish: '',
+    start_publish_date: ''
   }
   userData;
   Divisi = [];
+  Lokasi = [];
   Jabatan = [];
   Bagian = [];
   Periode = [];
   RekapPeriode = [];
-  selectedCity: any;
-  selectedRkp= {
-    idRkp: ''
-  };
   date: Date;
   minDate: Date;
+  selectedDivisi= {
+    idDivisi: ''
+  };
+  selectedJabatan= {
+    idJabatan: ''
+  };
+  selectedBagian= {
+    idBagian: ''
+  };
+  selectedLokasi= {
+    idLokasi: ''
+  };
   constructor(
     public ApiWithTokenService: ApiWithTokenService,
+    private activeRoute: ActivatedRoute,
     public router : Router,
     public CookieService : CookieService,
     private datePipe: DatePipe
@@ -66,7 +95,7 @@ export class EditLokerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user();
-    this.getLokasi();
+    this.viewById();
   }
 
   ngOnDestroy() {
@@ -92,45 +121,105 @@ export class EditLokerComponent implements OnInit, OnDestroy {
     console.log(this.userData);
   }
 
-  getLokasi() {
-    const apiUrl = 'Cabang/getBranchById/'+this.userData.branch_code
+  viewById(){
+    this.activeRoute.params.subscribe(params => {
+      const data = {
+        id: params.id,
+      };
+      this.ApiWithTokenService.getById(data, 'lowonganKerja/getDataByid/', this.userData.token)
+      .pipe(
+        takeUntil(this.subs))  
+      .subscribe(res => {
+        console.log(res);
+        this.getLokasi(res.data[0].branch_code+' - '+res.data[0].branch_name);
+        this.getDivisi(res.data[0].id_divisi)
+        this.getJabatan(res.data[0].id_divisi, res.data[0].id_jabatan);
+        this.getBagian(res.data[0].id_bagian, res.data[0].id_jabatan);
+        this.dataLoker = {
+          branch: res.data[0].branch_code+' - '+res.data[0].branch_name,
+          id_lowongan: res.data[0].id_lowongan,
+          id_request: res.data[0].id_request,
+          branch_code: res.data[0].branch_code,
+          branch_name : res.data[0].branch_name,
+          id_divisi: res.data[0].id_divisi,
+          nm_divisi: res.data[0].nm_divisi,
+          id_jabatan: res.data[0].id_jabatan,
+          nm_jabatan : res.data[0].nm_jabatan,
+          requirement_skill: res.data[0].requirement_skill,
+          requirement_degree: res.data[0].requirement_degree,
+          gender: res.data[0].gender,
+          min_age: res.data[0].min_age,
+          max_age: res.data[0].max_age,
+          due_date: res.data[0].due_date,
+          working_experience : res.data[0].working_experience,
+          status: res.data[0].status,
+          created_date: res.data[0].created_date,
+          updated_date: res.data[0].updated_date,
+          created_by : res.data[0].created_by,
+          updated_by : res.data[0].updated_by,
+          date_publish: res.data[0].date_publish,
+          start_publish_date: res.data[0].start_publish_date
+        }
+      })
+    })
+  }
+
+  getLokasi(lokasiById) {
+    const apiUrl = 'Cabang/getallbranch/'
     this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
     .pipe(
       takeUntil(this.subs))
     .subscribe(x => {
-      const lokasi = x.data.map(x=> {
+      this.Lokasi = x.data.map(x=> {
         const data = {
           lokasiName: x.branch_code+' - '+x.branch_name,
           branch_code: x.branch_code
         }
         return data;
       })
-      this.lokasi = lokasi[0].lokasiName;
+      this.selectedLokasi.idLokasi = this.Lokasi.filter(x=> {
+        return lokasiById == x.lokasiName
+      })[0];
     })
   }
 
-  getJabatan() {
-    const apiUrl = 'setupJabatan/getSetupJabatanByDivisi/'+this.userData.divisi
+  getDivisi(idDivisi) {
+    const apiUrl = 'divisi/getalldivisi/'
+    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+    .pipe(
+      takeUntil(this.subs))
+    .subscribe(x => {
+      this.Divisi = x.data;
+      this.selectedDivisi.idDivisi = this.Divisi.filter(x=> {
+        return idDivisi == x.id
+      })[0];
+    })
+  }
+
+  getJabatan(idDivisi, idJabatan) {
+    const apiUrl = 'setupJabatan/getSetupJabatanByDivisi/'+idDivisi
     this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
     .pipe(
       takeUntil(this.subs))
     .subscribe(x => {
       this.Jabatan = x.data;
+      this.selectedJabatan.idJabatan = this.Jabatan.filter(x=> {
+        return idJabatan == x.id_jabatan
+      })[0];
       console.log(this.Jabatan);
     })
   }
 
-  selectJabatan(ev){
-    console.log(ev);
-  }
-
-  getBagian() {
-    const apiUrl = 'bagian/getBagianBySetupJabatan/'+this.userData.divisi
+  getBagian(idBagian, idJabatan) {
+    const apiUrl = 'bagian/getBagianBySetupJabatan/'+idJabatan
     this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
     .pipe(
       takeUntil(this.subs))
     .subscribe(x => {
       this.Bagian = x.data;
+      this.selectedBagian.idBagian = this.Bagian.filter(x=> {
+        return idBagian == x.id_bagian
+      })[0];
       console.log(this.Bagian);
     })
   }
@@ -146,7 +235,12 @@ export class EditLokerComponent implements OnInit, OnDestroy {
     }
   };
 
-  addRkp(){
+  cancel(){
+    this.router.navigate(['/lowongan-kerja/data-table']);
+  }
+
+  editLoker(){
 
   }
+
 }

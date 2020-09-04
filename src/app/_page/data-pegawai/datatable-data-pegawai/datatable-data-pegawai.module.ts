@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DatatableDataPegawaiComponent } from './datatable-data-pegawai.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbModule, NgbDropdown } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
@@ -25,8 +25,7 @@ export const routes: Routes = [
     NgxDatatableModule,
   ],
   providers: [
-    DatePipe,
-    NgbDropdown
+    DatePipe
   ]
 })
 export class DatatableDataPegawaiModule { }

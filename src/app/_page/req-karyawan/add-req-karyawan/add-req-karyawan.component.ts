@@ -22,6 +22,7 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
   private subs: Subject<void> = new Subject();
   acc: any;
   lokasi;
+  divisi;
   datarkap = {
     jml_personil: '-',
     nm_bagian: '-',
@@ -45,8 +46,8 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
     gender: '',
     keahlian: '',
     pendidikanMinimum: '',
-    usiaMaximum: 0,
-    usiaMinimum: 0,
+    usiaMaximum: '',
+    usiaMinimum: '',
     pengalamanKerja: '',
     reason: ''
   }
@@ -62,6 +63,15 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
   selectedCity: any;
   selectedRkp= {
     idRkp: ''
+  };
+  selectedDivisi= {
+    idDivisi: ''
+  };
+  selectedJabatan= {
+    idJabatan: ''
+  };
+  selectedBagian= {
+    idBagian: ''
   };
   date: Date;
   minDate: Date;
@@ -100,7 +110,6 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user();
-    this.getrkap();
   }
 
   ngOnDestroy() {
@@ -123,6 +132,19 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
       user_type: data.data.user_type,
       divisi: data.data.id_divisi
     };
+    console.log(this.userData);
+  }
+
+  rpkAction(){
+    if(this.rpk.condition == 'yes'){
+      this.disable = false;
+      this.getrkap();
+    } else {
+      this.disable = true;
+      this.getLokasi();
+      this.getDivisi();
+      this.getJabatan();
+    }
   }
 
   getrkap(){
@@ -185,6 +207,18 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
     })
   }
 
+  getDivisi() {
+    const apiUrl = 'divisi/getalldivisiById/'+this.userData.divisi
+    this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
+    .pipe(
+      takeUntil(this.subs))
+    .subscribe(x => {
+      this.Divisi = x.data;
+      this.divisi = x.data[0].nm_divisi;
+      this.datarkap.id_divisi = x.data[0].id;
+    })
+  }
+
   getJabatan() {
     const apiUrl = 'setupJabatan/getSetupJabatanByDivisi/'+this.userData.divisi
     this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
@@ -196,16 +230,24 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
   }
 
   selectJabatan(ev){
+    this.datarkap.id_jabatan = ev.id_jabatan;
+    this.getBagian(ev.id_jabatan)
   }
 
-  getBagian() {
-    const apiUrl = 'bagian/getBagianBySetupJabatan/'+this.userData.divisi
+  getBagian(ev) {
+    const apiUrl = 'bagian/getBagianBySetupJabatan/'+ev
     this.ApiWithTokenService.getAll(apiUrl, this.userData.token)
     .pipe(
       takeUntil(this.subs))
     .subscribe(x => {
       this.Bagian = x.data;
+      console.log(x.data);
     })
+  }
+
+  selectBagian(ev){
+    this.datarkap.id_bagian = ev.id_setup_jabatan;
+    this.getBagian(ev.id_jabatan)
   }
 
   
@@ -219,33 +261,58 @@ export class AddReqKaryawanComponent implements OnInit, OnDestroy {
     }
   };
 
-  rpkAction(){
-    if(this.rpk.condition == 'yes'){
-      this.disable = false;
-    } else {
-      this.disable = true;
+  cleanForm(){
+    this.datarkap = {
+      jml_personil: '-',
+      nm_bagian: '-',
+      nm_jabatan: '-',
+      nm_divisi: '-',
+      branch_code: '-',
+      branch_name: '-',
+      periode_pelaksanaan: '-',
+      rkap_periode: '-',
+      id_divisi: '-',
+      id_jabatan: '-',
+      id_bagian: '-'
+    }
+    this.dataReqKaryawan = {
+      startDate: '',
+      endDate: '',
+      idRkap: '',
+      personil : ''
+    }
+    this.formKualifikasi = {
+      gender: '',
+      keahlian: '',
+      pendidikanMinimum: '',
+      usiaMaximum: '',
+      usiaMinimum: '',
+      pengalamanKerja: '',
+      reason: ''
     }
   }
 
   addReqKaryawan(){
     const data = {
-      rkap_periode: this.datarkap.rkap_periode, 
-      id_divisi: this.datarkap.id_divisi,
-      branch_code: this.datarkap.branch_code,
-      id_jabatan: this.datarkap.id_jabatan,
-      id_bagian: this.datarkap.id_bagian,
-      periode: this.datarkap.periode_pelaksanaan,
-      jml_personil: this.dataReqKaryawan.personil,
-      gender: this.formKualifikasi.gender,
+      branch_code: (this.rpk.condition == 'yes')? this.datarkap.branch_code: this.userData.branch_code,
+      id_divisi: (this.rpk.condition == 'yes')? this.datarkap.id_divisi: this.userData.divisi ,
+      id_jabatan:  this.datarkap.id_jabatan ,
+      id_bagian: this.datarkap.id_bagian ,
       requirement_skill: this.formKualifikasi.keahlian,
       requirement_degree: this.formKualifikasi.pendidikanMinimum,
+      gender: this.formKualifikasi.gender,
       max_age: this.formKualifikasi.usiaMaximum,
       min_age: this.formKualifikasi.usiaMinimum,
+      tgl_request: this.dataReqKaryawan.startDate,
+      deu_date: this.dataReqKaryawan.endDate,
       working_experince: this.formKualifikasi.pengalamanKerja,
       reason: this.formKualifikasi.reason,
-      created_by: this.userData.email
-    }
-    this.ApiWithTokenService.add(data, 'rencanaKebutuhan/saveRencana', this.userData.token).subscribe(res => {
+      flag_plan:  (this.rpk.condition == 'yes')? 'Y': 'N',
+      id_rencana_kebutuhan: (this.rpk.condition == 'yes')? this.dataReqKaryawan.idRkap: '0',
+      jml_req: this.dataReqKaryawan.personil,
+      created_by: this.userData.name
+    };
+    this.ApiWithTokenService.add(data, 'requestKaryawan/createRequest', this.userData.token).subscribe(res => {
       typeSuccess();
     })
   }

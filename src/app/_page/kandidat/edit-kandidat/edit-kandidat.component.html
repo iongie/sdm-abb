@@ -76,16 +76,6 @@
                     diisi!!</small>
                 </fieldset>
               </div>
-              <div class="col-12 mb-2">
-                <fieldset class="form-group">
-                  <label for="periode">Alamat</label>
-                  <textarea class="form-control" id="alamat" name="alamat" #alamat="ngModel" required
-                    [(ngModel)]="dataKandidat.alamat" rows="3" placeholder="Keahlian" autocomplete="off"></textarea>
-                  <small class="form-text text-muted danger"
-                    *ngIf="!alamat.valid && (alamat.dirty || alamat.touched)">Wajib
-                    diisi!!</small>
-                </fieldset>
-              </div>
               <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
                 <fieldset class="form-group">
                   <label for="periode">Provinsi</label>
@@ -106,23 +96,13 @@
                     diisi!!</small>
                 </fieldset>
               </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
+              <div class="col-12 mb-2">
                 <fieldset class="form-group">
-                  <label for="periode">Kecamatan</label>
-                  <input class="form-control input-md " autocomplete="off" #kota="ngModel" required id="kota"
-                    name="kota" [(ngModel)]="dataKandidat.kota" type="text">
+                  <label for="periode">Alamat</label>
+                  <textarea class="form-control" id="alamat" name="alamat" #alamat="ngModel" required
+                    [(ngModel)]="dataKandidat.alamat" rows="3" placeholder="Keahlian" autocomplete="off"></textarea>
                   <small class="form-text text-muted danger"
-                    *ngIf="!kota.valid && (kota.dirty || kota.touched)">Wajib
-                    diisi!!</small>
-                </fieldset>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
-                <fieldset class="form-group">
-                  <label for="periode">Kelurahan</label>
-                  <input class="form-control input-md " autocomplete="off" #kelurahan="ngModel" required
-                    id="kelurahan" name="kelurahan" [(ngModel)]="dataKandidat.kelurahan" type="text">
-                  <small class="form-text text-muted danger"
-                    *ngIf="!kelurahan.valid && (kelurahan.dirty || kelurahan.touched)">Wajib
+                    *ngIf="!alamat.valid && (alamat.dirty || alamat.touched)">Wajib
                     diisi!!</small>
                 </fieldset>
               </div>
@@ -181,7 +161,7 @@
               </div>
             </div>
             <div class="form-group col-md-12 text-right">
-              <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
+              <button type="button" class="btn btn-success mr-2 btn-raised" (click)="cancel()">Cancel</button>
               <button type="button" class="btn btn-danger btn-raised" [disabled]="!kandidat.valid">Submit</button>
             </div>
           </form>

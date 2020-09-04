@@ -1,132 +1,115 @@
 <div class="row text-left">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-content">
-          <div class="card-body">
-            <div class="px-3">
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="projectinput1">Nama: </label>
-                    <div class="col-md-9">
-                      <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group row">
-                    <label class="col-md-4 label-control" for="projectinput1">Divisi: </label>
-                    <div class="col-md-8">
-                      <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group row">
-                    <label class="col-md-3 label-control" for="projectinput1">Jabatan: </label>
-                    <div class="col-md-9">
-                      <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group row">
-                    <label class="col-md-4 label-control" for="projectinput1">Job Title: </label>
-                    <div class="col-md-8">
-                      <div class="border pl-2 pt-1 pb-1 pr-1 rounded">{{lokasi}}</div>
-                    </div>
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="px-3">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="projectinput1">PIHAK 1: </label>
+                  <div class="col-8 mb-2">
+                    <select class="form-control" [(ngModel)]="formKontrakKerja.idPihakOne" #idPihakOne="ngModel"
+                      id="idPihakOne" name="idPihakOne" required>
+                      <option value="approved" selected>Approved</option>
+                      <option value="declined">Desclined</option>
+                      <option value="pending">Pending</option>
+                    </select>
+                    <small class="form-text text-muted danger"
+                      *ngIf="!idPihakOne.valid && (idPihakOne.dirty || idPihakOne.touched)">Silahkan
+                      Pilih Pihak 1</small>
                   </div>
                 </div>
               </div>
+              <div class="col-12">
+                <div class="form-group row">
+                  <label class="col-md-4 label-control" for="projectinput1">PIHAK 2: </label>
+                  <div class="col-md-8 mb-2">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">Gigih Santoso</div>
+                  </div>
+                  <label class="col-md-4 label-control" for="projectinput1"></label>
+                  <div class="col-md-8 mb-2">
+                    <div class="border pl-2 pt-1 pb-1 pr-1 rounded">Jalan Pendidka 1</div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="row text-left">
-    <div class="col-sm-12">
-      <div class="card">
-        <div class="card-header">
-          <div class="row">
-            <div class="col-10 text-left">
-              <h4 class="card-title">Perjanjian Kerja</h4>
-            </div>
+</div>
+<div class="row text-left">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-10 text-left">
+            <h4 class="card-title">Perjanjian Kerja</h4>
           </div>
         </div>
-        <div class="card-content">
-          <div class="card-body">
-            <form class="form" #f="ngForm">
-              <div class="row">
-                <!-- <div class="col-12 mb-2">
-                  <label for="floatEmail">Kandidat</label>
-                  <ng-select [items]="RekapPeriode" [(ngModel)]="dataInterview.idKandidat" name="idKandidat" id="idKandidat"
-                    #idKandidat="ngModel">
-                  </ng-select>
-                  <small class="form-text text-muted danger"
-                    *ngIf="!idKandidat.valid && (idKandidat.dirty || idKandidat.touched) ">Silahkan Pilih Request
-                    Karyawan</small>
-                </div> -->
-                <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group">
-                    <label for="minDate">Tanggal Masuk</label>
-                    <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.tanggalInterview" name="tanggalInterview"
-                      id="tanggalInterview" #tanggalInterview="ngModel" required [minDate]="minDate" autocomplete="off" />
-                    <small class="form-text text-muted danger"
-                      *ngIf="!tanggalInterview.valid && (tanggalInterview.dirty || tanggalInterview.touched) && tanggalInterview.errors?.minDate">minDate
-                      error</small>
-                  </div>
-                </div>
-                <!-- <div class="col-xl-6 col-lg-6 col-md-12">
-                  <div class="form-group">
-                    <label for="minDate">Waktu Interview</label>
-                    <input bsDatepicker class="form-control" [(ngModel)]="dataInterview.waktuInterview" name="waktuInterview"
-                      id="waktuInterview" #waktuInterview="ngModel" required [minDate]="minDate" autocomplete="off" />
-                    <small class="form-text text-muted danger"
-                      *ngIf="!waktuInterview.valid && (waktuInterview.dirty || waktuInterview.touched) && waktuInterview.errors?.minDate">minDate
-                      error</small>
-                  </div>
-                </div> -->
-                <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
-                  <fieldset class="form-group">
-                    <label for="periode">NIK</label>
-                    <input class="form-control input-md " autocomplete="off" #PIC="ngModel" required id="PIC"
-                      name="PIC" [(ngModel)]="dataInterview.PIC" type="text">
-                    <small class="form-text text-muted danger" *ngIf="!PIC.valid && (PIC.dirty || PIC.touched)">Wajib
-                      diisi!!</small>
-                  </fieldset>
-                </div>
-                <!-- <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
-                  <fieldset class="form-group">
-                    <label for="periode">Tempat Interview</label>
-                    <input class="form-control input-md " autocomplete="off" #tempatInterview="ngModel" required
-                      id="tempatInterview" name="tempatInterview" [(ngModel)]="dataInterview.tempatInterview" type="number"
-                      min="1">
-                    <small class="form-text text-muted danger"
-                      *ngIf="!tempatInterview.valid && (tempatInterview.dirty || tempatInterview.touched)">Wajib
-                      diisi!!</small>
-                  </fieldset>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 mb-2">
-                  <fieldset class="form-group">
-                    <label for="periode">Kontak PIC</label>
-                    <input class="form-control input-md " autocomplete="off" #kontakPIC="ngModel" required
-                      id="kontakPIC" name="kontakPIC" [(ngModel)]="dataInterview.kontakPIC" type="number">
-                    <small class="form-text text-muted danger"
-                      *ngIf="!kontakPIC.valid && (kontakPIC.dirty || kontakPIC.touched)">Wajib
-                      diisi!!</small>
-                  </fieldset>
-                </div> -->
-  
-                <div class="form-group col-md-12 text-right">
-                  <button type="button" class="btn btn-success mr-2 btn-raised">Cancel</button>
-                  <button type="button" class="btn btn-danger btn-raised" [disabled]="!f.valid">Submit</button>
-                </div>
-              </div>
-            </form>
-          </div>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50"
+            [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [scrollbarV]="false" [scrollbarH]="false"
+            [selected]="selected" [selectionType]="SelectionType.checkbox" (select)="onSelect($event)" (activate)="onActivate($event)">
+            <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+              [resizeable]="false">
+              <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                let-selectFn="selectFn">
+                <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)" />
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected"
+                let-onCheckboxChangeFn="onCheckboxChangeFn">
+                <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="PASAL" sortable="false" prop="branch">
+              <ng-template let-row="rows" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <span>{{value}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Deskription" sortable="false" prop="divisi">
+              <ng-template let-row="rows" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <span>{{value}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Actions" sortable="false" prop="id">
+              <ng-template let-row="data" let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <a class="p-0" data-original-title="" title="" (click)="openModalApproval(value, $event, content)">
+                  <i class="ft-eye  font-medium-3 mr-2"></i>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Penjelasan Pasal</h4>
+    <button type="button" class="close" (click)="d('Cross click')">
+      <span>&times;</span>
+    </button>
+  </div>
+  <form class="form" #f="ngForm">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-12">
+          
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-danger btn-raised" (click)="c('Close click')"
+        [disabled]="!f.valid">Process</button>
+    </div>
+  </form>
+</ng-template>
