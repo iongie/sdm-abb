@@ -44,6 +44,8 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
     statusNikah: ''
   }
   userData;
+  checkerEmail: boolean;
+  messageStatusEmail;
   constructor(
     public ApiWithTokenService: ApiWithTokenService,
     public router : Router,
@@ -144,6 +146,20 @@ export class EditKandidatComponent implements OnInit, OnDestroy {
       console.log(res.data, ev, kota);
       console.log(this.dataKandidat);
       
+    })
+  }
+
+  checkEmail(ev){
+    const data = {
+      id : ev
+    }
+    this.ApiWithTokenService.getById(data, 'Kandidat/checkEmailExistsKandidat/', this.userData.token)
+    .pipe(
+      takeUntil(this.subs))
+    .subscribe(res => {
+      console.log(res);
+      this.messageStatusEmail = res.message;
+      this.checkerEmail = (res.message =="Email is exists")? true:false;
     })
   }
 
